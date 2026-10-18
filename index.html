@@ -1,8 +1,8 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control V6.2</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V6.2</h1><p>Loading the reader-paced Flight Director, mission trajectories and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control V6.3</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V6.3</h1><p>Loading the reader-paced Flight Director, mission trajectories and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
 (async()=>{
 try{
- const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response] = await Promise.all([fetch('./v3.html?release=rc42-v3'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1')]);
- if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok||!v61Response.ok)throw new Error('The viewer or cone patch is not accessible.');
+ const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response] = await Promise.all([fetch('./v3.html?release=rc42-v3'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3')]);
+ if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok||!v61Response.ok||!v63Response.ok)throw new Error('The viewer or cone patch is not accessible.');
  let html=await response.text();
  const patch=await patchResponse.text();
  const centroidPatch=await centroidResponse.text();
@@ -10,6 +10,7 @@ try{
  const navDataPatch=await navDataResponse.text();
  const v6Patch=await v6Response.text();
  const v61Patch=await v61Response.text();
+ const v63Patch=await v63Response.text();
  // Keep the archived V3 page and V6/V6.1 patches unchanged: only repair
  // the Auto camera's transition zoom and craft-safe framing in the render function.
  const oldCamera="let desired=targetCamera(s,t); if(!frameCam) frameCam={...desired}; else { frameCam.cx=lerp(frameCam.cx,desired.cx,.13); frameCam.cy=lerp(frameCam.cy,desired.cy,.13); frameCam.scale=lerp(frameCam.scale,desired.scale,.16); frameCam.using=desired.using; } const cam=frameCam;";
@@ -17,6 +18,11 @@ try{
  if(!html.includes(oldCamera)) throw new Error('Unexpected camera source: leaving previous version unchanged.');
  html=html.replace(oldCamera,safeCamera);
 
+
+ const v63OverviewMarkup=`<section class="v63-overview" aria-label="Synchronized heliocentric mission overview"><div class="v63-overview-top"><span class="v63-eyebrow">HELIOCENTRIC OVERVIEW</span><span id="v63HelioContext">SYNCED TO CURRENT REPLAY</span></div><canvas id="v63HelioCanvas" role="img" aria-label="Sun, source and destination bodies, spacecraft and full transfer path in heliocentric coordinates; orange outline indicates the main camera field of view"></canvas><div class="v63-overview-legend"><span><i class="v63-mark" style="background:#89eee7"></i> Flown</span><span><i class="v63-mark" style="background:#f9b971"></i> Camera field</span><span>Dashed orange = reconstructed GAD-off coast when enabled</span></div></section>`;
+ const v63Css=`.v63-overview{background:#07131f;border-top:1px solid #253c54;padding:9px 12px 8px}.v63-overview-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px}.v63-eyebrow{font-size:10px;font-weight:850;letter-spacing:.12em;color:#d7e8f6}#v63HelioContext{font-size:10px;color:#7d9eb9;font-family:ui-monospace,Consolas,monospace}.v63-overview canvas{display:block;width:100%;height:195px;background:#07131e;border:1px solid #1c3348;border-radius:9px}.v63-overview-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;color:#8da4ba;font-size:9px;line-height:1.4;margin-top:6px}.v63-overview-legend span{display:inline-flex;align-items:center;gap:4px}.v63-mark{display:inline-block;width:14px;height:3px;border-radius:2px}@media(max-width:760px){.v63-overview{padding:7px 9px}.v63-overview canvas{height:154px}.v63-overview-legend{gap:5px 10px}}`;
+ if(!html.includes('<div class="playback">'))throw new Error('Overview insertion point unavailable');
+ html=html.replace('<div class="playback">',v63OverviewMarkup+'\n      <div class="playback">');
  const oldMarkup="</div></div></div>\n      <div class=\"phase-box\">";
  const newMarkup="</div></div><div class=\"cone-settings\"><label class=\"cone-checkbox\"><input id=\"coneToggle\" type=\"checkbox\" checked> Show recorded coupling cone</label><div class=\"cone-range\"><span>Axis θ</span><b id=\"coneTheta\">—</b><span>Half-angle φ</span><b id=\"conePhi\">—</b></div><div class=\"cone-disclaimer\">Actual RC42 command geometry: θ points the cone in the inertial XY plane; φ sets its half-angle. Shaded body material is a 2D schematic of the intercepted mass, not an independently calculated 3D centroid.</div></div></div>\n      <div class=\"phase-box\">";
  const oldAim="This panel turns the θ/φ aperture command into an intuitive body-centered aim point. It is a visualization of coupling direction, not a literal optical camera view.";
@@ -27,7 +33,7 @@ try{
  const close='</scr'+'ipt>';
  const ending='})();\n'+close;
  if(!html.includes(oldMarkup)||!html.includes(oldAim)||!html.includes(ending)) throw new Error('Unexpected viewer version; original file preserved.');
- html=html.replace('</style>',css+'\n</style>')
+ html=html.replace('</style>',css+v63Css+'\n</style>')
    .replace('Aperture aim visualization</div>','Recorded cone / intercepted body</div>')
    .replace('Projected aim point</span>','Axis θ</span>')
    .replace('Hemisphere</span>','Half-angle φ</span>')
@@ -35,12 +41,12 @@ try{
    .replace(oldAim,newAim)
    .replace(oldMarkup,newMarkup)
    .replace(oldAbout,newAbout)
-   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+v61Patch+'\n'+ending);
+   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+v61Patch+'\n'+v63Patch+'\n'+ending);
  document.open();document.write(html);document.close();
 }catch(err){
- console.error('V6.2 camera upgrade loader:',err);
+ console.error('V6.3 overview upgrade loader:',err);
  const boot=document.getElementById('boot');
- if(boot)boot.innerHTML='<h1>Mission Control could not load</h1><p>Try refreshing the page, or use the preserved <a href="./v6-1.html" style="color:#75e9e0">V6 replay</a>.</p>';
+ if(boot)boot.innerHTML='<h1>Mission Control could not load</h1><p>Try refreshing the page, or use the preserved <a href="./v6-2.html" style="color:#75e9e0">V6 replay</a>.</p>';
 }
 })();
 </script></body></html>
