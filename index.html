@@ -1,12 +1,14 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control V5</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V5</h1><p>Loading mission trajectories, flight director and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control V6</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V6</h1><p>Loading mission trajectories, flight director and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
 (async()=>{
 try{
- const [response, patchResponse, centroidResponse, insightsResponse] = await Promise.all([fetch('./v3.html?release=rc42-v3'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5')]);
- if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok)throw new Error('The viewer or cone patch is not accessible.');
+ const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response] = await Promise.all([fetch('./v3.html?release=rc42-v3'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6')]);
+ if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok)throw new Error('The viewer or cone patch is not accessible.');
  let html=await response.text();
  const patch=await patchResponse.text();
  const centroidPatch=await centroidResponse.text();
  const insightsPatch=await insightsResponse.text();
+ const navDataPatch=await navDataResponse.text();
+ const v6Patch=await v6Response.text();
  const oldMarkup="</div></div></div>\n      <div class=\"phase-box\">";
  const newMarkup="</div></div><div class=\"cone-settings\"><label class=\"cone-checkbox\"><input id=\"coneToggle\" type=\"checkbox\" checked> Show recorded coupling cone</label><div class=\"cone-range\"><span>Axis θ</span><b id=\"coneTheta\">—</b><span>Half-angle φ</span><b id=\"conePhi\">—</b></div><div class=\"cone-disclaimer\">Actual RC42 command geometry: θ points the cone in the inertial XY plane; φ sets its half-angle. Shaded body material is a 2D schematic of the intercepted mass, not an independently calculated 3D centroid.</div></div></div>\n      <div class=\"phase-box\">";
  const oldAim="This panel turns the θ/φ aperture command into an intuitive body-centered aim point. It is a visualization of coupling direction, not a literal optical camera view.";
@@ -25,12 +27,12 @@ try{
    .replace(oldAim,newAim)
    .replace(oldMarkup,newMarkup)
    .replace(oldAbout,newAbout)
-   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+ending);
+   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+ending);
  document.open();document.write(html);document.close();
 }catch(err){
- console.error('V5 upgrade loader:',err);
+ console.error('V6 upgrade loader:',err);
  const boot=document.getElementById('boot');
- if(boot)boot.innerHTML='<h1>Mission Control could not load</h1><p>Try refreshing the page, or use the preserved <a href="./v4-2.html" style="color:#75e9e0">V4.2 replay</a>.</p>';
+ if(boot)boot.innerHTML='<h1>Mission Control could not load</h1><p>Try refreshing the page, or use the preserved <a href="./v5.html" style="color:#75e9e0">V5 replay</a>.</p>';
 }
 })();
 </script></body></html>
