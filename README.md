@@ -17,3 +17,9 @@ A public interactive visualization of **hypothetical** Gravity Aperture Drive fl
 Recorded flight commands and sampled states originate from the frozen RC42 benchmark. For mobile playback, the long unpowered coast may be sampled more sparsely while retaining powered departure and capture keyframes. The additional GAD estimates are derived from recorded commands and recomputed mass centroids. The GAD magnitude is the *uncapped* formula, not a measured acceleration or a certified flight state. Gravitational acceleration plotted is the Newtonian contribution of the named nearby body, not a full N-body total. The orbit diagnostic is target-centered, instantaneous, and two-body only. None of these visual diagnostics modify the frozen simulation or independently replayed certification.
 
 The public website is deployed via GitHub Pages from the root of the main branch. The V4.2 viewer is preserved as `v4-2.html` for rollback.
+
+## RC45 regression atlas
+
+[Open the RC45 32-route regression atlas](https://mlowe484.github.io/GAD-Mission-Control/rc45/).
+
+RC45's October 18, 2026 three-pass checkpoint independently verified **13 of 32** routes in **96 of 576** planned search cells; **19 remain unresolved** within the sampled search budget, not physically ruled out. The RC45 atlas includes the 13 certified interactive trajectory replays, 32-route status index, recorded aperture command data, a separate earlier independently certified 319.7995-day Jupiter → Neptune reference, and an explicit distinction between simulation visualization and independent verification. Data files are carried in a losslessly compressed browser-readable archive under `rc45/payload_*.b64`. Original RC42 V6 material is unchanged. See [`rc45/REGRESSION_REPORT.md`](rc45/REGRESSION_REPORT.md) and [`rc45/route_summary.csv`](rc45/route_summary.csv).
