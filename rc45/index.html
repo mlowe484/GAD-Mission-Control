@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GAD RC45 / Physical Regression Atlas</title>
+<style>
+:root{color-scheme:dark;--bg:#070e1a;--surface:#0e1929;--surface2:#152238;--line:#26364b;--mint:#71dfce;--blue:#8eabff;--text:#e6f3fc;--muted:#9fb4cb;--amber:#e4ba77}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,sans-serif}body{background:radial-gradient(900px 500px at 25% -15%,#12364a 0,transparent 70%),var(--bg)}
+main{max-width:1440px;margin:auto;padding:24px clamp(16px,3vw,44px) 48px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--line)}.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--mint);font-weight:800}h1{margin:8px 0;font-size:clamp(22px,4vw,40px);font-weight:750;letter-spacing:-.04em}h2{margin:0 0 12px;font-size:20px}p{line-height:1.55;color:var(--muted)}.muted{color:var(--muted)}small{color:var(--muted)}a{color:#90dff3}button,input,select{font:inherit}button{cursor:pointer}.outline{display:inline-flex;padding:9px 14px;background:#14263b;color:var(--text);border:1px solid var(--line);border-radius:9px;text-decoration:none}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}.stat{padding:17px;background:var(--surface);border:1px solid var(--line);border-radius:14px}.stat strong{font-size:clamp(23px,3vw,30px);display:block}.stat label{display:block;color:var(--muted);font-size:11px;letter-spacing:.07em;text-transform:uppercase}.stat.ver strong{color:var(--mint)}
+.layout{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(0,1.65fr);gap:18px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}.head{padding:17px;border-bottom:1px solid var(--line)}.head p{margin:6px 0 0}.filter{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.filter button{border:1px solid #35506a;background:#15283d;color:#b5cbe2;padding:7px 10px;border-radius:8px}.filter button.active{border-color:var(--mint);color:var(--mint)}.route-list{max-height:720px;overflow:auto;padding:7px}.route{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--text);padding:11px;border-radius:9px;gap:10px}.route:hover,.route.active{background:var(--surface2);border-color:#36516a}.route span strong{display:block;margin-bottom:3px}.route span small{display:block}.pill{font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid #755d40;color:var(--amber);border-radius:20px;padding:4px 8px;white-space:nowrap}.pill.ok{color:var(--mint);border-color:#276b61}
+#viewer{padding:18px}#playCanvas{display:block;width:100%;aspect-ratio:16/9;background:#071321;border:1px solid #2d415b;border-radius:12px} .transport{display:flex;gap:10px;align-items:center;margin:16px 0}.transport input{flex:1;accent-color:var(--mint)}.transport button{border:1px solid #426074;border-radius:8px;background:#17374a;color:#d7f9f5;padding:8px 13px;min-width:72px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.metric{padding:11px;background:var(--surface2);border-radius:9px;min-width:0}.metric small{display:block;font-size:11px}.metric strong{display:block;margin-top:5px;font-size:14px;overflow-wrap:anywhere}.legend{display:flex;gap:13px;color:var(--muted);font-size:11px;flex-wrap:wrap;margin:9px 0 15px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.note{padding:12px;border:1px solid #4a513a;background:#29251b;font-size:12px;color:#eed7ae;border-radius:10px}.info{margin:14px 0;line-height:1.6;white-space:pre-line}.logline{font-family:ui-monospace,monospace;font-size:11px;overflow-wrap:anywhere}footer{color:var(--muted);margin:22px 0;font-size:12px}
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.route-list{max-height:300px}}@media(max-width:400px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head><body><main>
+<header><div><div class="eyebrow">GAD MISSION CONTROL · RC45</div><h1>Physical flight regression atlas</h1><p>Independent replay certificates, controller-search coverage, and reconstructed trajectory displays. Hypothetical Newtonian GAD model, not evidence of real antigravity hardware.</p></div><a class="outline" href="../index.html">Existing Mission Control ↗</a></header>
+<div class="stats" aria-live="polite"><div class="stat ver"><label>Certified routes</label><strong id="verified">—</strong></div><div class="stat"><label>Unresolved routes</label><strong id="unresolved">—</strong></div><div class="stat"><label>Search cells finished</label><strong id="cells">—</strong></div><div class="stat"><label>Hardware limit</label><strong>K ≤ 300</strong></div></div>
+<div class="layout"><section class="panel"><div class="head"><h2>32-route benchmark</h2><p>Verified means full physical orbit and independent replay. Unresolved does not mean impossible.</p><div class="filter"><button class="active" data-filter="all">All</button><button data-filter="VERIFIED_ROUTE">Verified</button><button data-filter="UNRESOLVED_SEARCH">Unresolved</button></div></div><div class="route-list" id="routes"></div></section>
+<section class="panel"><div id="viewer"><h2 id="missionName">Select a route</h2><p id="missionSummary">Flight replays are available only for independently certified missions.</p><canvas id="playCanvas" width="960" height="540"></canvas><div class="legend"><span><i class="dot" style="background:#74e4d1"></i>Reconstructed spacecraft track</span><span><i class="dot" style="background:#679cf7"></i>Departure body</span><span><i class="dot" style="background:#efbe74"></i>Destination body</span></div><div class="transport"><button id="toggle" disabled>Play</button><input aria-label="Flight progression" id="seek" type="range" min="0" max="1000" value="0" disabled><span id="clock">—</span></div><div class="metrics"><div class="metric"><small>Arrival from epoch</small><strong id="arrival">—</strong></div><div class="metric"><small>GAD K</small><strong id="kvalue">—</strong></div><div class="metric"><small>Coupled body</small><strong id="coupled">—</strong></div><div class="metric"><small>Radial (target)</small><strong id="radial">—</strong></div><div class="metric"><small>Tangential (target)</small><strong id="tangential">—</strong></div><div class="metric"><small>Controller stage</small><strong id="stage">—</strong></div></div><div class="info" id="details"></div><div class="note">Flight positions are independently reconstructed for visualization from the archived command sequence. Physical certification is based on the separately saved independent replay and two-revolution GAD-off orbit audit, not on the plotted samples.</div><p><a id="jsonlink" href="#" hidden>Open full flight JSON</a></p><p><button class="outline" id="priorPilot" type="button">View previously certified Jupiter → Neptune pilot (separate benchmark)</button></p></div></section></div>
+<footer id="footer">Source hashes, search diagnostic statuses, and command histories are retained alongside the portable regression package. Data is never displayed as verified unless it has a source-bound independent certificate.</footer>
+</main>
+<script>
+(async()=>{
+'use strict';
+
+// RC45 replay archive. This packs the original GitHub Pages JSON payloads
+// without changing any verified-route flags or flight measurements.
+// A legacy uncompressed JSON file can still be downloaded from the viewer.
+const rc45Archive = (async () => {
+  const parts = await Promise.all(['a','b','c'].map(async p => {
+    const r = await fetch('./payload_'+p+'.b64');
+    if (!r.ok) throw Error('RC45 payload '+p+' unavailable');
+    return (await r.text()).trim();
+  }));
+  const binary = atob(parts.join(''));
+  const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
+  if (typeof DecompressionStream !== 'function')
+    throw Error('This browser requires gzip DecompressionStream support');
+  const decoded = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  const archive = JSON.parse(await new Response(decoded).text());
+  if (!archive['manifest.json'] || !archive['references/index.json'])
+    throw Error('RC45 archive manifest missing');
+  return archive;
+})();
+async function rc45Fetch(url) {
+  const key = url.replace(/^\.\//,'');
+  const all = await rc45Archive;
+  if (!Object.prototype.hasOwnProperty.call(all,key)) return {ok:false};
+  return {ok:true,json:async()=>all[key]};
+}
+let rc45DownloadUrl = null;
+function setRc45JsonDownload(name, data) {
+  if (rc45DownloadUrl) URL.revokeObjectURL(rc45DownloadUrl);
+  rc45DownloadUrl = URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));
+  const link = $('jsonlink');
+  link.href = rc45DownloadUrl;
+  link.download = name;
+  link.textContent = 'Download complete viewer flight JSON';
+  link.hidden = false;
+}
+
+const $=x=>document.getElementById(x),canvas=$('playCanvas'),ctx=canvas.getContext('2d');
+const fmt=(x,n=2)=>Number.isFinite(x)?x.toFixed(n):'—';
+const text=(id,s)=>$(id).textContent=s;
+let routes=[],selected=null,flight=null,filtered='all',sampleIndex=0,playing=false,frame=0;
+function stageName(n){return ({1:'Finite departure',2:'Departure trim',3:'Ballistic coast',4:'Capture / insertion',5:'GAD-off orbit'})[n]||'Pre-launch'}
+function emptyFrame(message){ctx.fillStyle='#081827';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.textAlign='center';ctx.fillStyle='#a9bfd7';ctx.font='20px system-ui';ctx.fillText(message,canvas.width/2,canvas.height/2);ctx.textAlign='start'}
+function draw(){
+ if(!flight?.states?.length){emptyFrame('No certified flight replay for this search');return}
+ let states=flight.states,s=states[sampleIndex],w=canvas.width,h=canvas.height;
+ const coords=states.flatMap(d=>[[d[1],d[2]],[d[5],d[6]],[d[7],d[8]]]);
+ // Fit every route and moving-body path, maintaining adequate margin.
+ let minx=Math.min(...coords.map(d=>d[0])),maxx=Math.max(...coords.map(d=>d[0]));
+ let miny=Math.min(...coords.map(d=>d[1])),maxy=Math.max(...coords.map(d=>d[1]));
+ let span=Math.max(maxx-minx,maxy-miny,1),sc=.80*Math.min(w,h)/span,cx=(minx+maxx)/2,cy=(miny+maxy)/2;
+ function xy(x,y){return [w/2+(x-cx)*sc,h/2-(y-cy)*sc]}
+ ctx.clearRect(0,0,w,h);ctx.fillStyle='#061525';ctx.fillRect(0,0,w,h);
+ function path(ix,iy,color,last=states.length-1,width=1.5,dash=[]){ctx.beginPath();ctx.setLineDash(dash);for(let i=0;i<=last;i++){const p=xy(states[i][ix],states[i][iy]);if(i===0)ctx.moveTo(...p);else ctx.lineTo(...p)}ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([])}
+ path(5,6,'#294d82',states.length-1,1.4,[3,7]);path(7,8,'#67502e',states.length-1,1.4,[3,7]);path(1,2,'#74e4d1',sampleIndex,2.5);
+ function dot(x,y,color,r,name){const p=xy(x,y);ctx.beginPath();ctx.arc(...p,r,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();ctx.font='14px system-ui';ctx.fillStyle='#e5f0fd';ctx.fillText(name,p[0]+12,p[1]-10)}
+ dot(s[5],s[6],'#679cf7',7,flight.meta.source);dot(s[7],s[8],'#efbe74',7,flight.meta.destination);dot(s[1],s[2],'#74e4d1',5,'GAD');
+ const t=s[0];let lo=0,hi=flight.commands.length-1;while(lo<hi){let mid=Math.ceil((lo+hi)/2);if(flight.commands[mid][0]<=t)lo=mid;else hi=mid-1}
+ const cmd=flight.commands[lo]||[];
+ text('clock','Day '+fmt(t/86400,2));text('kvalue',fmt(cmd[3],2));text('coupled',cmd[1]?cmd[2]:'OFF');text('radial',fmt(s[12],3)+' km/s');text('tangential',fmt(s[13],3)+' km/s');text('stage',stageName(s[14]));
+}
+function progress(ix){sampleIndex=Math.max(0,Math.min(ix,flight.states.length-1));$('seek').value=Math.round(sampleIndex/Math.max(1,flight.states.length-1)*1000);draw()}
+function animate(ts){if(!playing)return;let n=Math.max(1,Math.floor(flight.states.length/550));progress(sampleIndex+n);if(sampleIndex>=flight.states.length-1){playing=false;text('toggle','Play');return}frame=requestAnimationFrame(animate)}
+function stop(){playing=false;cancelAnimationFrame(frame);text('toggle','Play')}
+async function choose(id){stop();selected=routes.find(r=>r.id===id);routeButtons();flight=null;text('missionName',selected.source+' → '+selected.destination);text('arrival',selected.arrival_days===null?'Not verified':fmt(selected.arrival_days,3)+' d');
+ $('jsonlink').hidden=true;$('seek').disabled=true;$('toggle').disabled=true;
+ if(selected.status!=='VERIFIED_ROUTE'||!selected.site_viewer_file){text('missionSummary','No independently certified flight for this route in the completed search cells.');text('details',selected.search_cells_completed+'/'+selected.search_cells_planned+' search cells completed\nBest observed coarse miss: '+(selected.best_screened_miss_target_radii===null?'unknown':fmt(selected.best_screened_miss_target_radii,2)+' target radii')+'\nOutcome counts: '+JSON.stringify(selected.physical_outcome_counts||{}));draw();return}
+ text('missionSummary','Loading certified trajectory replay…');try{
+  let response=await rc45Fetch('./'+selected.site_viewer_file);if(!response.ok)throw new Error('Missing viewer data');flight=await response.json();
+  if(flight.meta.source_bound_certificate!==true||flight.meta.independent_replay_verified!==true)throw new Error('Certification not present');
+  text('missionSummary',`${fmt(flight.meta.flight_days,3)} d flight · ${fmt(flight.meta.launch_wait_days,2)} d launch wait · independently certified`);
+  text('details',`Commands: ${flight.meta.command_count} · derived samples: ${flight.meta.state_count}\nGAD-off orbit: ${fmt(flight.meta.cert_min_alt_km,2)}–${fmt(flight.meta.cert_max_alt_km,2)} km altitude\nExecuting source SHA256: ${flight.meta.original_controller_sha256}`);
+  $('seek').disabled=false;$('toggle').disabled=false;setRc45JsonDownload(selected.id+'.json',flight);progress(0);
+ }catch(e){text('missionSummary','Viewer data unavailable: '+e.message);draw()}
+}
+async function loadPriorPilot(){
+ stop();selected={id:'rc45_pilot_jupiter_neptune'};routeButtons();flight=null;
+ text('missionName','Prior certified pilot · Jupiter → Neptune');
+ text('arrival','319.800 d (prior pilot)');text('missionSummary','Loading independently certified pilot, not counted in this 32-route campaign…');
+ $('jsonlink').hidden=true;$('seek').disabled=true;$('toggle').disabled=true;
+ try{
+  const idxRes=await rc45Fetch('./references/index.json');if(!idxRes.ok)throw Error('Reference index missing');
+  const idx=await idxRes.json();if(idx.not_counted_in_current_32_route_sweep!==true)throw Error('Reference provenance invalid');
+  const url='./'+idx.viewer_file;const resp=await rc45Fetch(url);if(!resp.ok)throw Error('Pilot viewer file missing');
+  const payload=await resp.json();if(payload.meta.source_bound_certificate!==true||payload.meta.independent_replay_verified!==true)throw Error('Pilot lacks certification');
+  if(payload.meta.original_controller_sha256!==idx.source_sha256)throw Error('Pilot source does not match the reference');
+  flight=payload;
+  text('missionSummary','319.800-day independently certified RC45 pilot · NOT a newly verified pass from this 32-route regression');
+  text('details',`Separate pilot evidence: ${flight.meta.command_count} exact commands; ${flight.meta.state_count} derived visualization states\nGAD-off verified orbital altitude ${fmt(flight.meta.cert_min_alt_km,2)}–${fmt(flight.meta.cert_max_alt_km,2)} km\nSource SHA256: ${flight.meta.original_controller_sha256}\nThe matrix Jupiter → Neptune route remains unresolved in this campaign.`);
+  $('seek').disabled=false;$('toggle').disabled=false;setRc45JsonDownload('rc45_pilot_jupiter_neptune.json',payload);progress(0);
+ }catch(e){text('missionSummary','Pilot data not available: '+e.message);draw()}
+}
+$('priorPilot').onclick=loadPriorPilot;
+function routeButtons(){const target=$('routes');target.replaceChildren();for(const r of routes){if(filtered!=='all' && (filtered==='UNRESOLVED_SEARCH'?r.status==='VERIFIED_ROUTE':r.status!==filtered))continue;let b=document.createElement('button');b.className='route'+(selected?.id===r.id?' active':'');let span=document.createElement('span'),title=document.createElement('strong'),desc=document.createElement('small'),pill=document.createElement('span');title.textContent=r.source+' → '+r.destination;desc.textContent=r.status==='VERIFIED_ROUTE'?fmt(r.arrival_days,2)+' days · certified':r.search_cells_completed+' cells evaluated';pill.className='pill'+(r.status==='VERIFIED_ROUTE'?' ok':'');pill.textContent=r.status==='VERIFIED_ROUTE'?'VERIFIED':'UNRESOLVED';span.append(title,desc);b.append(span,pill);b.onclick=()=>choose(r.id);target.append(b)}}
+function initialize(doc){routes=doc.route_records;let cert=routes.filter(r=>r.status==='VERIFIED_ROUTE').length;text('verified',cert+'/32');text('unresolved',32-cert);text('cells',doc.completed_search_cells);routeButtons();choose((routes.find(r=>r.status==='VERIFIED_ROUTE')||routes[0]).id);text('footer',`Data export ${new Date(doc.date_utc).toLocaleString()} · Source ${doc.source_sha256}. This describes observed searches, not physically impossible destinations.`)}
+for(const b of document.querySelectorAll('[data-filter]'))b.onclick=()=>{filtered=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));routeButtons()};
+$('seek').oninput=()=>{if(flight){stop();progress(Math.round(+$('seek').value/1000*(flight.states.length-1)))}};
+$('toggle').onclick=()=>{if(!flight)return;if(playing){stop()}else{if(sampleIndex>=flight.states.length-1)progress(0);playing=true;text('toggle','Pause');frame=requestAnimationFrame(animate)}};
+emptyFrame('Loading the RC45 campaign…');
+try{let response=await rc45Fetch('./manifest.json');if(!response.ok)throw Error('manifest.json not found');initialize(await response.json())}
+catch(e){emptyFrame('Data manifest unavailable');text('missionSummary','Load via GitHub Pages or a local HTTP server: '+e.message)}
+})();
+</script>
+</body></html>
