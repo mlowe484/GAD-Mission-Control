@@ -1,0 +1,60 @@
+{
+  "schema_version": "gad-replay-catalog-v1",
+  "replays": [
+    {
+      "route": "earth_mercury",
+      "revision": "RC42",
+      "replay_id": "earth_mercury@RC42",
+      "label": "Earth \u2192 Mercury",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "mars_mercury",
+      "revision": "RC42",
+      "replay_id": "mars_mercury@RC42",
+      "label": "Mars \u2192 Mercury",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "jupiter_neptune",
+      "revision": "RC42",
+      "replay_id": "jupiter_neptune@RC42",
+      "label": "Jupiter \u2192 Neptune",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "saturn_neptune",
+      "revision": "RC42",
+      "replay_id": "saturn_neptune@RC42",
+      "label": "Saturn \u2192 Neptune",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "earth_mars",
+      "revision": "RC44",
+      "replay_id": "earth_mars@RC44",
+      "label": "Earth \u2192 Mars",
+      "file": "replays/RC44/earth_mars.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "earth_mercury",
+      "revision": "RC44",
+      "replay_id": "earth_mercury@RC44",
+      "label": "Earth \u2192 Mercury",
+      "file": "replays/RC44/earth_mercury.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    }
+  ],
+  "description": "Controller-independent route+revision indexed archive; each item binds trajectory, commands and verification from one revision."
+}
