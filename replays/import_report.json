@@ -1,0 +1,53 @@
+{
+  "schema_version": "gad-replay-import-report-v1",
+  "benchmark": "GAD_RC44_FROZEN_FULL_32_OF_32_2026-10-18.zip",
+  "rc44_certified_with_trajectory": 27,
+  "rc44_replay_routes": [
+    "earth_mars",
+    "earth_mercury",
+    "earth_moon",
+    "earth_venus",
+    "jupiter_saturn",
+    "jupiter_uranus",
+    "mars_earth",
+    "mars_mercury",
+    "mars_venus",
+    "mercury_earth",
+    "mercury_mars",
+    "mercury_moon",
+    "mercury_venus",
+    "moon_earth",
+    "moon_mars",
+    "neptune_jupiter",
+    "neptune_saturn",
+    "neptune_uranus",
+    "saturn_jupiter",
+    "saturn_uranus",
+    "uranus_jupiter",
+    "uranus_neptune",
+    "uranus_saturn",
+    "venus_earth",
+    "venus_mars",
+    "venus_mercury",
+    "venus_moon"
+  ],
+  "not_replayable_from_rc44_trajectory": [
+    "jupiter_neptune",
+    "mars_moon",
+    "moon_mercury",
+    "moon_venus",
+    "saturn_neptune"
+  ],
+  "also_available_rc42": [
+    "earth_mercury",
+    "jupiter_neptune",
+    "mars_mercury",
+    "saturn_neptune"
+  ],
+  "catalog_replay_records": 31,
+  "distinct_selectable_routes": 29,
+  "sampled_state_count": 26219,
+  "recorded_state_count": 724082,
+  "command_count": 48376,
+  "evidence_interpretation": "Saved certified result summaries are not substitutes for historical sampled trajectory positions. No simulated/recovered trajectories were fabricated."
+}

@@ -2,59 +2,284 @@
   "schema_version": "gad-replay-catalog-v1",
   "replays": [
     {
-      "route": "earth_mercury",
-      "revision": "RC42",
-      "replay_id": "earth_mercury@RC42",
-      "label": "Earth \u2192 Mercury",
-      "embedded": "legacy-rc42",
-      "verified": true,
-      "benchmark": "RC42 frozen verified 32/32"
-    },
-    {
-      "route": "mars_mercury",
-      "revision": "RC42",
-      "replay_id": "mars_mercury@RC42",
-      "label": "Mars \u2192 Mercury",
-      "embedded": "legacy-rc42",
-      "verified": true,
-      "benchmark": "RC42 frozen verified 32/32"
-    },
-    {
-      "route": "jupiter_neptune",
-      "revision": "RC42",
-      "replay_id": "jupiter_neptune@RC42",
-      "label": "Jupiter \u2192 Neptune",
-      "embedded": "legacy-rc42",
-      "verified": true,
-      "benchmark": "RC42 frozen verified 32/32"
-    },
-    {
-      "route": "saturn_neptune",
-      "revision": "RC42",
-      "replay_id": "saturn_neptune@RC42",
-      "label": "Saturn \u2192 Neptune",
-      "embedded": "legacy-rc42",
-      "verified": true,
-      "benchmark": "RC42 frozen verified 32/32"
-    },
-    {
       "route": "earth_mars",
       "revision": "RC44",
       "replay_id": "earth_mars@RC44",
-      "label": "Earth \u2192 Mars",
+      "label": "Earth → Mars",
       "file": "replays/RC44/earth_mars.json",
       "verified": true,
       "benchmark": "RC44 frozen verified 32/32"
     },
     {
       "route": "earth_mercury",
+      "revision": "RC42",
+      "replay_id": "earth_mercury@RC42",
+      "label": "Earth → Mercury",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "earth_mercury",
       "revision": "RC44",
       "replay_id": "earth_mercury@RC44",
-      "label": "Earth \u2192 Mercury",
+      "label": "Earth → Mercury",
       "file": "replays/RC44/earth_mercury.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "earth_moon",
+      "revision": "RC44",
+      "replay_id": "earth_moon@RC44",
+      "label": "Earth → Moon",
+      "file": "replays/RC44/earth_moon.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "earth_venus",
+      "revision": "RC44",
+      "replay_id": "earth_venus@RC44",
+      "label": "Earth → Venus",
+      "file": "replays/RC44/earth_venus.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "jupiter_neptune",
+      "revision": "RC42",
+      "replay_id": "jupiter_neptune@RC42",
+      "label": "Jupiter → Neptune",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "jupiter_saturn",
+      "revision": "RC44",
+      "replay_id": "jupiter_saturn@RC44",
+      "label": "Jupiter → Saturn",
+      "file": "replays/RC44/jupiter_saturn.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "jupiter_uranus",
+      "revision": "RC44",
+      "replay_id": "jupiter_uranus@RC44",
+      "label": "Jupiter → Uranus",
+      "file": "replays/RC44/jupiter_uranus.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mars_earth",
+      "revision": "RC44",
+      "replay_id": "mars_earth@RC44",
+      "label": "Mars → Earth",
+      "file": "replays/RC44/mars_earth.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mars_mercury",
+      "revision": "RC42",
+      "replay_id": "mars_mercury@RC42",
+      "label": "Mars → Mercury",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "mars_mercury",
+      "revision": "RC44",
+      "replay_id": "mars_mercury@RC44",
+      "label": "Mars → Mercury",
+      "file": "replays/RC44/mars_mercury.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mars_venus",
+      "revision": "RC44",
+      "replay_id": "mars_venus@RC44",
+      "label": "Mars → Venus",
+      "file": "replays/RC44/mars_venus.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mercury_earth",
+      "revision": "RC44",
+      "replay_id": "mercury_earth@RC44",
+      "label": "Mercury → Earth",
+      "file": "replays/RC44/mercury_earth.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mercury_mars",
+      "revision": "RC44",
+      "replay_id": "mercury_mars@RC44",
+      "label": "Mercury → Mars",
+      "file": "replays/RC44/mercury_mars.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mercury_moon",
+      "revision": "RC44",
+      "replay_id": "mercury_moon@RC44",
+      "label": "Mercury → Moon",
+      "file": "replays/RC44/mercury_moon.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "mercury_venus",
+      "revision": "RC44",
+      "replay_id": "mercury_venus@RC44",
+      "label": "Mercury → Venus",
+      "file": "replays/RC44/mercury_venus.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "moon_earth",
+      "revision": "RC44",
+      "replay_id": "moon_earth@RC44",
+      "label": "Moon → Earth",
+      "file": "replays/RC44/moon_earth.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "moon_mars",
+      "revision": "RC44",
+      "replay_id": "moon_mars@RC44",
+      "label": "Moon → Mars",
+      "file": "replays/RC44/moon_mars.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "neptune_jupiter",
+      "revision": "RC44",
+      "replay_id": "neptune_jupiter@RC44",
+      "label": "Neptune → Jupiter",
+      "file": "replays/RC44/neptune_jupiter.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "neptune_saturn",
+      "revision": "RC44",
+      "replay_id": "neptune_saturn@RC44",
+      "label": "Neptune → Saturn",
+      "file": "replays/RC44/neptune_saturn.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "neptune_uranus",
+      "revision": "RC44",
+      "replay_id": "neptune_uranus@RC44",
+      "label": "Neptune → Uranus",
+      "file": "replays/RC44/neptune_uranus.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "saturn_jupiter",
+      "revision": "RC44",
+      "replay_id": "saturn_jupiter@RC44",
+      "label": "Saturn → Jupiter",
+      "file": "replays/RC44/saturn_jupiter.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "saturn_neptune",
+      "revision": "RC42",
+      "replay_id": "saturn_neptune@RC42",
+      "label": "Saturn → Neptune",
+      "embedded": "legacy-rc42",
+      "verified": true,
+      "benchmark": "RC42 frozen verified 32/32"
+    },
+    {
+      "route": "saturn_uranus",
+      "revision": "RC44",
+      "replay_id": "saturn_uranus@RC44",
+      "label": "Saturn → Uranus",
+      "file": "replays/RC44/saturn_uranus.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "uranus_jupiter",
+      "revision": "RC44",
+      "replay_id": "uranus_jupiter@RC44",
+      "label": "Uranus → Jupiter",
+      "file": "replays/RC44/uranus_jupiter.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "uranus_neptune",
+      "revision": "RC44",
+      "replay_id": "uranus_neptune@RC44",
+      "label": "Uranus → Neptune",
+      "file": "replays/RC44/uranus_neptune.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "uranus_saturn",
+      "revision": "RC44",
+      "replay_id": "uranus_saturn@RC44",
+      "label": "Uranus → Saturn",
+      "file": "replays/RC44/uranus_saturn.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "venus_earth",
+      "revision": "RC44",
+      "replay_id": "venus_earth@RC44",
+      "label": "Venus → Earth",
+      "file": "replays/RC44/venus_earth.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "venus_mars",
+      "revision": "RC44",
+      "replay_id": "venus_mars@RC44",
+      "label": "Venus → Mars",
+      "file": "replays/RC44/venus_mars.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "venus_mercury",
+      "revision": "RC44",
+      "replay_id": "venus_mercury@RC44",
+      "label": "Venus → Mercury",
+      "file": "replays/RC44/venus_mercury.json",
+      "verified": true,
+      "benchmark": "RC44 frozen verified 32/32"
+    },
+    {
+      "route": "venus_moon",
+      "revision": "RC44",
+      "replay_id": "venus_moon@RC44",
+      "label": "Venus → Moon",
+      "file": "replays/RC44/venus_moon.json",
       "verified": true,
       "benchmark": "RC44 frozen verified 32/32"
     }
   ],
-  "description": "Controller-independent route+revision indexed archive; each item binds trajectory, commands and verification from one revision."
+  "description": "Revision-agnostic certified flight replays. RC44 contains all 27 archived routes with full historical trajectory CSV evidence, plus 4 RC42 legacy replays; five additional RC44 certificates lack packaged sample trajectories."
 }

@@ -24,7 +24,7 @@ BODIES = {
 }
 STAGE={
     'DEPARTURE_VECTOR_TARGET':1, 'DEPARTURE_TRIM':2,
-    'CRUISE_COAST':3, 'COAST':3,
+    'CRUISE_COAST':3, 'COAST':3, 'CRUISE_CORRECTION':3,
     'RC23_REPLAY_FINITE_CAPTURE_PLAN':4,
     'RC6_IMPACT_RADIAL_BRAKE_TANGENTIAL_INSERTION':4,
     'CAPTURE':4,
@@ -101,7 +101,7 @@ def make_replay(args):
             if t<-1e-4: raise ValueError('State predates first command: inspect time alignment')
             require(t>=last_t-1e-6,'Out-of-order trajectory times')
             st=normalize_stage(row[fields['stage']],stages)
-            keep=(st!=3 or t-coast_prev>=args.coast_step_s or prev_stage!=st)
+            keep=(st!=3 or row[fields['stage']]=='CRUISE_CORRECTION' or t-coast_prev>=args.coast_step_s or prev_stage!=st)
             if keep:
                 state=[round(t,3),round(num(row,fields['x'])*coord_scale,3),round(num(row,fields['y'])*coord_scale,3),
                        round(num(row,fields['vx'])*vel_scale,6),round(num(row,fields['vy'])*vel_scale,6),
