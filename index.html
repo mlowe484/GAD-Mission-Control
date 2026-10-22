@@ -1,8 +1,8 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control V7.1</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V7.1</h1><p>Loading the reader-paced Flight Director, mission trajectories and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control V8</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V7.1</h1><p>Loading the reader-paced Flight Director, mission trajectories and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
 (async()=>{
 try{
- const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response, catalogResponse, v7Response] = await Promise.all([fetch('./v3.html?release=rc42-v3'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3'),fetch('./replays/catalog.json?release=v7-1'),fetch('./v7-revisions.patch.js?release=v7')]);
- if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok||!v61Response.ok||!v63Response.ok||!catalogResponse.ok||!v7Response.ok)throw new Error('The viewer or cone patch is not accessible.');
+ const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response, catalogResponse, v7Response, v8Response] = await Promise.all([fetch('./v3.html?release=rc42-v3'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3'),fetch('./replays/catalog.json?release=v7-1'),fetch('./v7-revisions.patch.js?release=v7'),fetch('./v8-learning.patch.js?release=v8')]);
+ if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok||!v61Response.ok||!v63Response.ok||!catalogResponse.ok||!v7Response.ok||!v8Response.ok)throw new Error('The viewer or cone patch is not accessible.');
  let html=await response.text();
  const patch=await patchResponse.text();
  const centroidPatch=await centroidResponse.text();
@@ -13,6 +13,7 @@ try{
  const v63Patch=await v63Response.text();
  const v7Catalog=await catalogResponse.json();
  const v7Patch=await v7Response.text();
+ const v8Patch=await v8Response.text();
  // Keep the archived V3 page and V6/V6.1 patches unchanged: only repair
  // the Auto camera's transition zoom and craft-safe framing in the render function.
  const oldCamera="let desired=targetCamera(s,t); if(!frameCam) frameCam={...desired}; else { frameCam.cx=lerp(frameCam.cx,desired.cx,.13); frameCam.cy=lerp(frameCam.cy,desired.cy,.13); frameCam.scale=lerp(frameCam.scale,desired.scale,.16); frameCam.using=desired.using; } const cam=frameCam;";
@@ -44,7 +45,7 @@ const v71ContrastCss='.select-wrap select{background:#10283e!important;color:#f7
    .replace(oldAim,newAim)
    .replace(oldMarkup,newMarkup)
    .replace(oldAbout,newAbout)
-   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+v61Patch+'\n'+v63Patch+'\nconst GAD_V7_CATALOG='+JSON.stringify(v7Catalog)+';\n'+v7Patch+'\n'+ending);
+   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+v61Patch+'\n'+v63Patch+'\nconst GAD_V7_CATALOG='+JSON.stringify(v7Catalog)+';\n'+v7Patch+'\n'+v8Patch+'\n'+ending);
  document.open();document.write(html);document.close();
 }catch(err){
  console.error('V7 replay upgrade loader:',err);
