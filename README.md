@@ -23,3 +23,7 @@ The public website is deployed via GitHub Pages from the root of the main branch
 [Open the RC45 32-route regression atlas](https://mlowe484.github.io/GAD-Mission-Control/rc45/).
 
 RC45's October 18, 2026 three-pass checkpoint independently verified **13 of 32** routes in **96 of 576** planned search cells; **19 remain unresolved** within the sampled search budget, not physically ruled out. The RC45 atlas includes the 13 certified interactive trajectory replays, 32-route status index, recorded aperture command data, a separate earlier independently certified 319.7995-day Jupiter → Neptune reference, and an explicit distinction between simulation visualization and independent verification. Data files are carried in a losslessly compressed browser-readable archive under `rc45/payload_*.b64`. Original RC42 V6 material is unchanged. See [`rc45/REGRESSION_REPORT.md`](rc45/REGRESSION_REPORT.md) and [`rc45/route_summary.csv`](rc45/route_summary.csv).
+
+## V8 welcome and interactive learning lab
+
+The latest `index.html` includes a collapsible welcome guide and an interactive 2D demonstration of K, aperture axis θ, cone half-angle φ, coupling-body selection, mass coverage, and modeled repulsive acceleration. This educational simulation is not a certified flight replay. The independent, revision-indexed historical replay library remains accessible below the guide; the prior V7.1 homepage is preserved as `v7-1.html`.
