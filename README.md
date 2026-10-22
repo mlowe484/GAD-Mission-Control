@@ -27,3 +27,5 @@ RC45's October 18, 2026 three-pass checkpoint independently verified **13 of 32*
 ## V8 welcome and interactive learning lab
 
 The latest `index.html` includes a collapsible welcome guide and an interactive 2D demonstration of K, aperture axis θ, cone half-angle φ, coupling-body selection, mass coverage, and modeled repulsive acceleration. This educational simulation is not a certified flight replay. The independent, revision-indexed historical replay library remains accessible below the guide; the prior V7.1 homepage is preserved as `v7-1.html`.
+
+V8 deployment refresh
