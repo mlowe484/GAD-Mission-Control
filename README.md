@@ -1,31 +1,33 @@
-# GAD Mission Control
+# GAD Mission Control — V10.3
 
-A public interactive visualization of **hypothetical** Gravity Aperture Drive flight replays using frozen RC42 simulation evidence. This website is not evidence of working antigravity hardware.
+**Public website:** https://mlowe484.github.io/GAD-Mission-Control/
 
-## V5 features
+This is the **single public production entry point**. Previous public `vN.html` entry pages were retired. The website is an educational visualization of **hypothetical Gravitational Aperture Drive physics**, not evidence of a functioning real device.
 
-- Four selectable missions: Earth → Mercury, Mars → Mercury, Jupiter → Neptune, Saturn → Neptune.
-- Recorded aperture direction θ and half-opening angle φ, with recomputed intercepted mass centroid and mass fraction.
-- Flight director explanations keyed to the recorded controller stages and navigation timeline.
-- Optional velocity, GAD repulsion, and single-body gravity direction arrows.
-- Capture dashboard: target-relative radial/tangential speed and instantaneous osculating **two-body** periapsis, apoapsis, eccentricity and energy estimates.
-- Stage 0 and the post-shutdown orbit are derived visualization segments, not archived powered flight states.
-- Independent replay/capture verification remains a separate result from the illustrative flight display.
+## Four main experiences
+
+- **Learn:** the aperture, K strength, axis θ, half-opening angle φ, coupled mass centroid and educational examples.
+- **2D Missions:** revision-indexed archived simulation replays. The site catalog contains 29 distinct routes and 31 route/revision records (RC42 and RC44). Results and replay verification belong to each source revision, not to the viewer.
+- **3D Explorer:** ten-year frozen P6F JPL/Horizons 31-body planetary/moon reference; twenty optional moons use native-cadence state samples with archived velocities and Hermite interpolation. The optional spacecraft is a derived illustration, not a verified 3D GAD mission.
+- **Pilot Challenge:** five educational orbital tasks using a simplified Newtonian + GAD teaching model. Success indicators are teaching criteria, not independent controller certification.
+
+## What changed in V10.3
+
+1. Extracted the production bootstrap from `index.html` to `assets/bootstrap-v10-3.js`; the four experience modules and their immutable source archives remain distinct.
+2. Added `assets/release-manifest.json` to document module loading order, provenance and the private V9 extension boundary.
+3. Fixed cross-tab keyboard interaction: 2D replay arrow keys no longer interfere with Pilot controls.
+4. Added replay jump-back/jump-forward/restart buttons. Changing tabs and hiding the browser window stops autoplay instead of continuing to simulate invisibly.
+5. Named missing startup resources in the error display instead of linking to an obsolete historical page.
+6. Added versioned release documentation and a repeatable structural regression check.
+
+**Important:** the website still uses a compatibility layer to assemble the frozen V3–V10 engine modules at startup. This release organizes and guards that layer; it does **not** pretend those modules have been fully rewritten as independent ES modules. More invasive extraction should be a separately qualified change.
 
 ## Data integrity
 
-Recorded flight commands and sampled states originate from the frozen RC42 benchmark. For mobile playback, the long unpowered coast may be sampled more sparsely while retaining powered departure and capture keyframes. The additional GAD estimates are derived from recorded commands and recomputed mass centroids. The GAD magnitude is the *uncapped* formula, not a measured acceleration or a certified flight state. Gravitational acceleration plotted is the Newtonian contribution of the named nearby body, not a full N-body total. The orbit diagnostic is target-centered, instantaneous, and two-body only. None of these visual diagnostics modify the frozen simulation or independently replayed certification.
+The source packages, historical commands/flight states, numerical simulation equations and original P6F ephemeris have not been changed by V10.3. Distinguish **recorded** telemetry from interpolated ephemeris, **recomputed** force/orbit estimates and **illustrative** pilot/reference-spacecraft motions. 2D archived certificates do not certify any 3D GAD mission.
 
-The public website is deployed via GitHub Pages from the root of the main branch. The V4.2 viewer is preserved as `v4-2.html` for rollback.
+## Developer verification
 
-## RC45 regression atlas
+Run `python3 -m unittest discover -s tests -v` for the release structure and source-loading contract. The viewer's browser smoke check must also exercise all four tabs, revision switching, 3D moons, keyboard focus, and Pilot scenario resets at desktop and phone widths.
 
-[Open the RC45 32-route regression atlas](https://mlowe484.github.io/GAD-Mission-Control/rc45/).
-
-RC45's October 18, 2026 three-pass checkpoint independently verified **13 of 32** routes in **96 of 576** planned search cells; **19 remain unresolved** within the sampled search budget, not physically ruled out. The RC45 atlas includes the 13 certified interactive trajectory replays, 32-route status index, recorded aperture command data, a separate earlier independently certified 319.7995-day Jupiter → Neptune reference, and an explicit distinction between simulation visualization and independent verification. Data files are carried in a losslessly compressed browser-readable archive under `rc45/payload_*.b64`. Original RC42 V6 material is unchanged. See [`rc45/REGRESSION_REPORT.md`](rc45/REGRESSION_REPORT.md) and [`rc45/route_summary.csv`](rc45/route_summary.csv).
-
-## V8 welcome and interactive learning lab
-
-The latest `index.html` includes a collapsible welcome guide and an interactive 2D demonstration of K, aperture axis θ, cone half-angle φ, coupling-body selection, mass coverage, and modeled repulsive acceleration. This educational simulation is not a certified flight replay. The independent, revision-indexed historical replay library remains accessible below the guide; the prior V7.1 homepage is preserved as `v7-1.html`.
-
-V8 deployment refresh
+Release manifest: `assets/release-manifest.json`. Release notes: `docs/RELEASE_V10_3.md`.

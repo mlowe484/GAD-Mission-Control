@@ -1,0 +1,31 @@
+{
+  "release": "10.3",
+  "production_entry": "index.html",
+  "bootstrap": "assets/bootstrap-v10-3.js",
+  "public_versioned_entrypoints": false,
+  "scope": "V10.3 visual/navigation hardening; zero simulator and archived replay physics changes",
+  "legacy_replay_core": "assets/replay-core.html",
+  "modules_in_order": [
+    "v4-physics.patch.js",
+    "v4-2-centroid.patch.js",
+    "v5-insights.patch.js",
+    "v6-navdata.js",
+    "v6-visuals.patch.js",
+    "v6-1-director.patch.js",
+    "v6-3-overview.patch.js",
+    "v7-revisions.patch.js",
+    "v8-1-learning.patch.js",
+    "v9-tabs-and-pilot.patch.js",
+    "v10-ephemeris-and-lessons.patch.js",
+    "v10-1-3d-camera-and-reset.patch.js",
+    "v10-2-native-moons.patch.js",
+    "v10-3-stability.patch.js"
+  ],
+  "catalog": "replays/catalog.json",
+  "data_origins": [
+    "frozen RC42/RC44 flight records",
+    "frozen P6F 31-body JPL ephemeris",
+    "derived educational and diagnostic computations"
+  ],
+  "notes": "V10 through V10.3 execute inside the closing V9 IIFE. Preserve that scope until a tested source-level module migration is performed."
+}
