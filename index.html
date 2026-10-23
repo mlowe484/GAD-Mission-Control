@@ -1,9 +1,9 @@
 <!doctype html>
-<!-- GAD Mission Control V10 only-public-entrypoint marker: welcome and aperture learning lab --><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control · current V10</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V10</h1><p>Loading the reader-paced Flight Director, mission trajectories and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
+<!-- GAD Mission Control V10.1 only-public-entrypoint marker: welcome and aperture learning lab --><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading GAD Mission Control · current V10.1</title><style>html,body{margin:0;background:#060b14;color:#b5d6eb;font:15px system-ui}main{max-width:600px;padding:42px 24px;margin:auto}h1{color:#eafaff;font-size:23px}small{color:#8ea4bd}</style></head><body><main id="boot"><h1>GAD Mission Control V10.1</h1><p>Loading the reader-paced Flight Director, mission trajectories and orbital instruments…</p><small>The website may take a moment on mobile connections.</small></main><script>
 (async()=>{
 try{
- const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response, catalogResponse, v7Response, v8Response, v9Response, v10Response] = await Promise.all([fetch('./assets/replay-core.html?release=production-v10'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3'),fetch('./replays/catalog.json?release=v7-1'),fetch('./v7-revisions.patch.js?release=v7'),fetch('./v8-1-learning.patch.js?release=v8-1'),fetch('./v9-tabs-and-pilot.patch.js?release=v9'),fetch('./v10-ephemeris-and-lessons.patch.js?release=production-v10')]);
- if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok||!v61Response.ok||!v63Response.ok||!catalogResponse.ok||!v7Response.ok||!v8Response.ok||!v9Response.ok||!v10Response.ok)throw new Error('The viewer or cone patch is not accessible.');
+ const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response, catalogResponse, v7Response, v8Response, v9Response, v10Response, v101Response] = await Promise.all([fetch('./assets/replay-core.html?release=production-v10'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3'),fetch('./replays/catalog.json?release=v7-1'),fetch('./v7-revisions.patch.js?release=v7'),fetch('./v8-1-learning.patch.js?release=v8-1'),fetch('./v9-tabs-and-pilot.patch.js?release=v9'),fetch('./v10-ephemeris-and-lessons.patch.js?release=production-v10'),fetch('./v10-1-3d-camera-and-reset.patch.js?release=v10-1')]);
+ if(!response.ok||!patchResponse.ok||!centroidResponse.ok||!insightsResponse.ok||!navDataResponse.ok||!v6Response.ok||!v61Response.ok||!v63Response.ok||!catalogResponse.ok||!v7Response.ok||!v8Response.ok||!v9Response.ok||!v10Response.ok||!v101Response.ok)throw new Error('The viewer or cone patch is not accessible.');
  let html=await response.text();
  const patch=await patchResponse.text();
  const centroidPatch=await centroidResponse.text();
@@ -17,11 +17,12 @@ try{
  const v8Patch=await v8Response.text();
  const v9Patch=await v9Response.text();
  const v10Patch=await v10Response.text();
+ const v101Patch=await v101Response.text();
  // The V9 tab/pilot code runs inside a private closure. V10 extends its
  // internal controls, so it MUST execute before that V9 closure closes.
  // Keep V3-V8 controllers/replay modules and their data entirely unchanged.
  if(!/\}\)\(\);\s*$/.test(v9Patch))throw new Error('Unexpected V9 module boundary; V10 cannot initialize safely.');
- const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n})();');
+ const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n'+v101Patch+'\n})();');
  // Keep the archived V3 page and V6/V6.1 patches unchanged: only repair
  // the Auto camera's transition zoom and craft-safe framing in the render function.
  const oldCamera="let desired=targetCamera(s,t); if(!frameCam) frameCam={...desired}; else { frameCam.cx=lerp(frameCam.cx,desired.cx,.13); frameCam.cy=lerp(frameCam.cy,desired.cy,.13); frameCam.scale=lerp(frameCam.scale,desired.scale,.16); frameCam.using=desired.using; } const cam=frameCam;";
