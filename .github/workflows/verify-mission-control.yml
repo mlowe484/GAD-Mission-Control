@@ -1,0 +1,40 @@
+name: Verify Mission Control release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'v*-*.js'
+      - 'v10-3-stability.patch.js'
+      - 'replays/catalog.json'
+      - 'tests/**'
+      - '.github/workflows/verify-mission-control.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'v*-*.js'
+      - 'v10-3-stability.patch.js'
+      - 'replays/catalog.json'
+      - 'tests/**'
+
+permissions:
+  contents: read
+
+jobs:
+  source-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate site source and replay manifests
+        run: python -m unittest discover -s tests -v
+      - name: Check V10.3 bootstrap JavaScript syntax
+        run: node --check assets/bootstrap-v10-3.js
+      - name: Check stability module syntax
+        run: node --check v10-3-stability.patch.js
