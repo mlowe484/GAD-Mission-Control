@@ -17,6 +17,11 @@ try{
  const v8Patch=await v8Response.text();
  const v9Patch=await v9Response.text();
  const v10Patch=await v10Response.text();
+ // The V9 tab/pilot code runs inside a private closure. V10 extends its
+ // internal controls, so it MUST execute before that V9 closure closes.
+ // Keep V3-V8 controllers/replay modules and their data entirely unchanged.
+ if(!/\}\)\(\);\s*$/.test(v9Patch))throw new Error('Unexpected V9 module boundary; V10 cannot initialize safely.');
+ const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n})();');
  // Keep the archived V3 page and V6/V6.1 patches unchanged: only repair
  // the Auto camera's transition zoom and craft-safe framing in the render function.
  const oldCamera="let desired=targetCamera(s,t); if(!frameCam) frameCam={...desired}; else { frameCam.cx=lerp(frameCam.cx,desired.cx,.13); frameCam.cy=lerp(frameCam.cy,desired.cy,.13); frameCam.scale=lerp(frameCam.scale,desired.scale,.16); frameCam.using=desired.using; } const cam=frameCam;";
@@ -48,7 +53,7 @@ const v71ContrastCss='.select-wrap select{background:#10283e!important;color:#f7
    .replace(oldAim,newAim)
    .replace(oldMarkup,newMarkup)
    .replace(oldAbout,newAbout)
-   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+v61Patch+'\n'+v63Patch+'\nconst GAD_V7_CATALOG='+JSON.stringify(v7Catalog)+';\n'+v7Patch+'\n'+v8Patch+'\n'+v9Patch+'\n'+v10Patch+'\n'+ending);
+   .replace(ending,patch+'\n'+centroidPatch+'\n'+insightsPatch+'\n'+navDataPatch+'\n'+v6Patch+'\n'+v61Patch+'\n'+v63Patch+'\nconst GAD_V7_CATALOG='+JSON.stringify(v7Catalog)+';\n'+v7Patch+'\n'+v8Patch+'\n'+v9V10Patch+'\n'+ending);
  document.open();document.write(html);document.close();
 }catch(err){
  console.error('V7 replay upgrade loader:',err);
