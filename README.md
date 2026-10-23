@@ -1,4 +1,4 @@
-# GAD Mission Control — V10.4
+# GAD Mission Control — V10.4.1
 
 **Public website:** https://mlowe484.github.io/GAD-Mission-Control/
 
@@ -42,3 +42,7 @@ Release manifest: `assets/release-manifest.json`. Release notes: `docs/RELEASE_V
 - Preserve 2D certified replays, educational Pilot physics, and the original single public homepage.
 
 Deployment entry: `index.html` → `assets/bootstrap-v10-4.js` → `v10-4-subsystem-explorer.patch.js`. The three guarded trail/follow rendering hooks are applied to the existing V10.1 view during startup. V10.4 does not certify new orbital elements or 3D GAD missions.
+
+## V10.4.1 — Smooth Moon Playback
+
+Mimas orbits in roughly 22.7 hours. The previous ¼-day/frame minimum jumped 6 simulated hours every animation step, showing just 3–4 apparent positions per revolution. The clock now advances continuously according to actual elapsed browser time, with 15-minute/hour/day simulated-time-per-real-second options, and a reference epoch readout. Default: 3 simulated hours/real second, or about 7.6 real seconds per Mimas revolution. Native JPL P6F positions, velocity interpolation, moon orbit trails, 2D mission replays and pilot GAD physics are unchanged.

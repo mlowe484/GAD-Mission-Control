@@ -119,7 +119,7 @@
   v10ShipHost='Earth';$$v9('v10ShipHost').value='Earth';shipToggle.checked=false;refreshShipSelect();
   $$v9('v10Moons').checked=false;
   v10DateElem.value='2026-10-22';yawSlider.value='25';tiltSlider.value='55';zoomSlider.value='100';
-  $$v9('v10JplRate').value='1';updateZoom();if(v10Primary)v10SetTimeFromDate(v10DateElem.value);syncTimeline();draw3d();}
+  $v9('v10JplRate').value='10800';updateZoom();if(v10Primary)v10SetTimeFromDate(v10DateElem.value);syncTimeline();draw3d();}
  resetBtn.addEventListener('click',reset3d);
  // Improved input handling: the original V9 pointer gestures only supported
  // one drag and clamped tilt to 10-85. Capture handlers supersede them.

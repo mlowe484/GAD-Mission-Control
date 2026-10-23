@@ -4,7 +4,7 @@
  * Trail coverage and follow tracking use a validated display-only V10.1 hook.
  */
 {
- const release='V10.4';
+ const release='V10.4.1';
  const badge=document.querySelector('#gadProductionRelease strong');
  if(badge)badge.textContent=release+' · CURRENT RELEASE';
  document.title='GAD Mission Control · '+release;

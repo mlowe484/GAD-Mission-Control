@@ -1,9 +1,9 @@
 {
-  "release": "10.4",
+  "release": "10.4.1",
   "production_entry": "index.html",
   "bootstrap": "assets/bootstrap-v10-4.js",
   "public_versioned_entrypoints": false,
-  "scope": "V10.4 JPL subsystem exploration: moon following, native-cadence loader, user-adjustable trails and derived parent-relative orbital diagnostics; no simulator or replay physics changes",
+  "scope": "V10.4.1 3D ephemeris playback smoothing (browser clock and frame-cadence only); frozen JPL data and flight physics unchanged",
   "legacy_replay_core": "assets/replay-core.html",
   "modules_in_order": [
     "v4-physics.patch.js",
@@ -28,5 +28,5 @@
     "frozen P6F 31-body JPL ephemeris",
     "derived educational and diagnostic computations"
   ],
-  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand."
+  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps."
 }

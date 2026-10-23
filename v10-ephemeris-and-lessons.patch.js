@@ -108,7 +108,7 @@ const v10Controls=document.createElement('div');v10Controls.className='v10-ephem
 <label>Camera center <select id="v10Focus"><option value="Sun">Solar System (Sun)</option><option value="Earth">Earth + Moon</option><option value="Mars">Mars</option><option value="Jupiter">Jupiter</option><option value="Saturn">Saturn</option><option value="Uranus">Uranus</option><option value="Neptune">Neptune</option></select></label>
 <label>Reference spacecraft orbit <select id="v10ShipHost">${v10BodyHost.map(x=>`<option value="${x}">${x}</option>`).join('')}</select></label>
 <label><input type="checkbox" id="v10Moons"> Show 20 additional moons</label>
-<label>Playback days/frame <select id="v10JplRate"><option value=".25">¼</option><option value="1" selected>1</option><option value="5">5</option><option value="20">20</option></select></label>`;
+<label>Playback speed <select id="v10JplRate"><option value="900">15 simulated min/s</option><option value="3600">1 simulated hour/s</option><option value="10800" selected>3 simulated hours/s</option><option value="21600">6 simulated hours/s</option><option value="43200">12 simulated hours/s</option><option value="86400">1 simulated day/s</option><option value="432000">5 simulated days/s</option><option value="1728000">20 simulated days/s</option></select></label><span id="v1041ClockReadout" style="font:11px ui-monospace,monospace;color:#a8dbe6;align-self:end">Reference epoch: —</span>`;
 three.insertBefore(v10Controls,threeCanvas);
 const v10Verify=document.createElement('div');v10Verify.className='v10-provenance';v10Verify.id='v10EphemProvenance';v10Verify.textContent='Reading frozen JPL reference package…';three.appendChild(v10Verify);
 const v10DateElem=$$v9('v10Date');
@@ -188,13 +188,30 @@ $$v9('v10ShipHost').addEventListener('change',e=>{v10ShipHost=e.target.value;dra
 $$v9('v10Date').addEventListener('change',e=>{if(!v10Primary)return;v10SetTimeFromDate(e.target.value);draw3d()});
 $$v9('v10Moons').addEventListener('change',e=>{if(e.target.checked)void v10LoadMoons();else draw3d()});
 const v10OldSpin=$$v9('v9Spin');v10OldSpin.addEventListener('click',()=>{v10OldSpin.textContent=threeRun?'Pause ephemeris':'Play ephemeris';});
-let v10LastEphem=0;
-function v10EphemAnimation(now){requestAnimationFrame(v10EphemAnimation);if(!v10Primary||active!=='3d'||!threeRun){v10LastEphem=now;return;}
- if(!v10LastEphem)v10LastEphem=now;
- if(now-v10LastEphem>=160){const steps=Math.min(10,Math.round((now-v10LastEphem)/160)),days=Number($$v9('v10JplRate').value);v10ClockSec=Math.min(v10Primary.t1_tdb_s,v10ClockSec+steps*86400*days);
-  const elapsed=v10ClockSec-v10Primary.t0_tdb_s;const dt=new Date(Date.UTC(2026,9,21)+elapsed*1000);v10DateElem.value=dt.toISOString().slice(0,10);
-  if(v10ClockSec>=v10Primary.t1_tdb_s){threeRun=false;v10OldSpin.textContent='Play ephemeris';}
-  draw3d();v10LastEphem=now;}
+let v10LastEphem=0,v1041LastDraw=0;
+function v10UpdateClockLabel(){
+ if(!v10Primary)return;
+ const elapsed=Math.max(0,v10ClockSec-v10Primary.t0_tdb_s);
+ const date=new Date(Date.UTC(2026,9,21)+elapsed*1000);
+ const dateText=date.toISOString().slice(0,10),timeText=date.toISOString().slice(11,19);
+ v10DateElem.value=dateText;
+ const output=$v9('v1041ClockReadout');
+ if(output)output.textContent='Reference epoch: '+dateText+' '+timeText+' (approx. UTC display)';
+}
+function v10EphemAnimation(now){
+ requestAnimationFrame(v10EphemAnimation);
+ if(!v10Primary||active!=='3d'||!threeRun||document.hidden){v10LastEphem=now;v1041LastDraw=now;return;}
+ if(!v10LastEphem){v10LastEphem=now;v1041LastDraw=now;return;}
+ const realDt=Math.max(0,Math.min(.12,(now-v10LastEphem)/1000));
+ v10LastEphem=now;
+ const simulatedSecondsPerSecond=Number($v9('v10JplRate').value);
+ if(!Number.isFinite(simulatedSecondsPerSecond)||simulatedSecondsPerSecond<=0)return;
+ v10ClockSec=Math.min(v10Primary.t1_tdb_s,v10ClockSec+realDt*simulatedSecondsPerSecond);
+ const frameInterval=v10MoonData?1000/24:1000/30;
+ if(now-v1041LastDraw>=frameInterval||v10ClockSec>=v10Primary.t1_tdb_s){
+  v10UpdateClockLabel();draw3d();v1041LastDraw=now;
+ }
+ if(v10ClockSec>=v10Primary.t1_tdb_s){threeRun=false;v10OldSpin.textContent='Play ephemeris';}
 }
 requestAnimationFrame(v10EphemAnimation);
 

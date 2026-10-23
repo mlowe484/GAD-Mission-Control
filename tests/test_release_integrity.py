@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 class ReleaseIntegrity(unittest.TestCase):
     def test_manifest(self):
         m=json.loads((ROOT/'assets/release-manifest.json').read_text())
-        self.assertEqual(m['release'],'10.4')
+        self.assertEqual(m['release'],'10.4.1')
         self.assertEqual(m['production_entry'],'index.html')
         self.assertFalse(m['public_versioned_entrypoints'])
         self.assertTrue((ROOT/m['bootstrap']).exists())
