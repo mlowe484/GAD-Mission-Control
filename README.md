@@ -1,4 +1,4 @@
-# GAD Mission Control — V10.3
+# GAD Mission Control — V10.4
 
 **Public website:** https://mlowe484.github.io/GAD-Mission-Control/
 
@@ -31,3 +31,14 @@ The source packages, historical commands/flight states, numerical simulation equ
 Run `python3 -m unittest discover -s tests -v` for the release structure and source-loading contract. The viewer's browser smoke check must also exercise all four tabs, revision switching, 3D moons, keyboard focus, and Pilot scenario resets at desktop and phone widths.
 
 Release manifest: `assets/release-manifest.json`. Release notes: `docs/RELEASE_V10_3.md`.
+
+## V10.4 subsystem explorer
+
+- Presets for the Solar System, Earth–Moon, Mars, Jupiter, Saturn, Uranus and Neptune.
+- Select and follow individual moons; optionally freeze camera focus while the bodies continue moving.
+- Change body-relative orbit-trail length (¼ to four orbital periods) or hide trails, and choose top, angled or edge-on camera views.
+- Show derived JPL-state parent-relative distance, speed, instantaneous two-body orbital period, and inclination relative to the J2000 inertial XY plane.
+- Restore lazy loading of the native-cadence 20-moon P6F archive from the existing split files; fall back transparently if unavailable.
+- Preserve 2D certified replays, educational Pilot physics, and the original single public homepage.
+
+Deployment entry: `index.html` → `assets/bootstrap-v10-4.js` → `v10-4-subsystem-explorer.patch.js`. The three guarded trail/follow rendering hooks are applied to the existing V10.1 view during startup. V10.4 does not certify new orbital elements or 3D GAD missions.

@@ -1,8 +1,8 @@
 (async()=>{
 try{
- const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response, catalogResponse, v7Response, v8Response, v9Response, v10Response, v101Response, v102Response, v103Response] = await Promise.all([fetch('./assets/replay-core.html?release=production-v10'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3'),fetch('./replays/catalog.json?release=v7-1'),fetch('./v7-revisions.patch.js?release=v7'),fetch('./v8-1-learning.patch.js?release=v8-1'),fetch('./v9-tabs-and-pilot.patch.js?release=v9'),fetch('./v10-ephemeris-and-lessons.patch.js?release=production-v10'),fetch('./v10-1-3d-camera-and-reset.patch.js?release=v10-2'),fetch('./v10-2-native-moons.patch.js?release=2026-10-23-native'),fetch('./v10-3-stability.patch.js?release=v10-3')]);
- const required=[response,patchResponse,centroidResponse,insightsResponse,navDataResponse,v6Response,v61Response,v63Response,catalogResponse,v7Response,v8Response,v9Response,v10Response,v101Response,v102Response,v103Response];
- const names=['replay core','aperture physics','mass-centroid display','mission diagnostics','navigation data','force vectors','flight director','heliocentric overview','replay catalog','revision selector','learning lab','tabs and pilot','JPL 3D viewer','camera and reset','native moon interpolation','V10.3 stability'];
+ const [response, patchResponse, centroidResponse, insightsResponse, navDataResponse, v6Response, v61Response, v63Response, catalogResponse, v7Response, v8Response, v9Response, v10Response, v101Response, v102Response, v103Response, v104Response] = await Promise.all([fetch('./assets/replay-core.html?release=production-v10'),fetch('./v4-physics.patch.js?release=v4-1'),fetch('./v4-2-centroid.patch.js?release=v4-2'),fetch('./v5-insights.patch.js?release=v5'),fetch('./v6-navdata.js?release=v6'),fetch('./v6-visuals.patch.js?release=v6'),fetch('./v6-1-director.patch.js?release=v6-1'),fetch('./v6-3-overview.patch.js?release=v6-3'),fetch('./replays/catalog.json?release=v7-1'),fetch('./v7-revisions.patch.js?release=v7'),fetch('./v8-1-learning.patch.js?release=v8-1'),fetch('./v9-tabs-and-pilot.patch.js?release=v9'),fetch('./v10-ephemeris-and-lessons.patch.js?release=production-v10'),fetch('./v10-1-3d-camera-and-reset.patch.js?release=v10-2'),fetch('./v10-2-native-moons.patch.js?release=2026-10-23-native'),fetch('./v10-3-stability.patch.js?release=v10-3'),fetch('./v10-4-subsystem-explorer.patch.js?release=v10-4')]);
+ const required=[response,patchResponse,centroidResponse,insightsResponse,navDataResponse,v6Response,v61Response,v63Response,catalogResponse,v7Response,v8Response,v9Response,v10Response,v101Response,v102Response,v103Response,v104Response];
+ const names=['replay core','aperture physics','mass-centroid display','mission diagnostics','navigation data','force vectors','flight director','heliocentric overview','replay catalog','revision selector','learning lab','tabs and pilot','JPL 3D viewer','camera and reset','native moon interpolation','V10.3 stability','V10.4 subsystem explorer'];
  const missing=required.flatMap((r,i)=>r.ok?[]:[names[i]+': HTTP '+r.status]);
  if(missing.length)throw new Error('Unable to load required website assets: '+missing.join('; '));
  let html=await response.text();
@@ -21,11 +21,25 @@ try{
  const v101Patch=await v101Response.text();
  const v102Patch=await v102Response.text();
  const v103Patch=await v103Response.text();
+ const v104Patch=await v104Response.text();
  // The V9 tab/pilot code runs inside a private closure. V10 extends its
  // internal controls, so it MUST execute before that V9 closure closes.
  // Keep V3-V8 controllers/replay modules and their data entirely unchanged.
  if(!/\}\)\(\);\s*$/.test(v9Patch))throw new Error('Unexpected V9 module boundary; V10 cannot initialize safely.');
- const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n'+v101Patch+'\n'+v102Patch+'\n'+v103Patch+'\n})();');
+ let v101Patched=v101Patch;
+ const renderingHooks=[
+  ["for(const name of names){const host=parentOf(name);if(!host||name===host)continue;",
+   "for(const name of (window.__GAD_V104_SETTINGS?.trailsEnabled===false?[]:names)){const host=parentOf(name);if(!host||name===host)continue;"],
+  ["const span=Math.min(T*1.05, v10Primary.t1_tdb_s-v10Primary.t0_tdb_s);",
+   "const span=Math.min(T*(window.__GAD_V104_SETTINGS?.trailOrbits||1.05), v10Primary.t1_tdb_s-v10Primary.t0_tdb_s);"],
+  ["const focus=v10Anchor,t=v10ClockSec,center=v10Vector(focus,t)||[0,0,0];",
+   "const focus=v10Anchor,t=v10ClockSec,center=(window.__GAD_V104_SETTINGS?.follow===false&&window.__GAD_V104_SETTINGS?.frozenCenter)||v10Vector(focus,t)||[0,0,0];"]
+ ];
+ for(const [oldText,newText] of renderingHooks){
+  if(v101Patched.split(oldText).length!==2)throw new Error('V10.4 incompatible 3D renderer hook: '+oldText.slice(0,60));
+  v101Patched=v101Patched.replace(oldText,newText);
+ }
+ const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n'+v101Patched+'\n'+v102Patch+'\n'+v103Patch+'\n'+v104Patch+'\n})();');
  // Keep the archived V3 page and V6/V6.1 patches unchanged: only repair
  // the Auto camera's transition zoom and craft-safe framing in the render function.
  const oldCamera="let desired=targetCamera(s,t); if(!frameCam) frameCam={...desired}; else { frameCam.cx=lerp(frameCam.cx,desired.cx,.13); frameCam.cy=lerp(frameCam.cy,desired.cy,.13); frameCam.scale=lerp(frameCam.scale,desired.scale,.16); frameCam.using=desired.using; } const cam=frameCam;";

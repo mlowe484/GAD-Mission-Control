@@ -1,9 +1,9 @@
 {
-  "release": "10.3",
+  "release": "10.4",
   "production_entry": "index.html",
-  "bootstrap": "assets/bootstrap-v10-3.js",
+  "bootstrap": "assets/bootstrap-v10-4.js",
   "public_versioned_entrypoints": false,
-  "scope": "V10.3 visual/navigation hardening; zero simulator and archived replay physics changes",
+  "scope": "V10.4 JPL subsystem exploration: moon following, native-cadence loader, user-adjustable trails and derived parent-relative orbital diagnostics; no simulator or replay physics changes",
   "legacy_replay_core": "assets/replay-core.html",
   "modules_in_order": [
     "v4-physics.patch.js",
@@ -19,7 +19,8 @@
     "v10-ephemeris-and-lessons.patch.js",
     "v10-1-3d-camera-and-reset.patch.js",
     "v10-2-native-moons.patch.js",
-    "v10-3-stability.patch.js"
+    "v10-3-stability.patch.js",
+    "v10-4-subsystem-explorer.patch.js"
   ],
   "catalog": "replays/catalog.json",
   "data_origins": [
@@ -27,5 +28,5 @@
     "frozen P6F 31-body JPL ephemeris",
     "derived educational and diagnostic computations"
   ],
-  "notes": "V10 through V10.3 execute inside the closing V9 IIFE. Preserve that scope until a tested source-level module migration is performed."
+  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand."
 }
