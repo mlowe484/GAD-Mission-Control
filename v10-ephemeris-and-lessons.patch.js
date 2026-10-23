@@ -210,3 +210,12 @@ v10LearnCard.innerHTML=`<div class="v9-eyebrow">ENGINEERING NOTES · HOW TO THIN
  <details><summary>6 · What “verified” means here</summary><p>Historical RC42/RC44 replays were independently checked against their hypothetical model criteria. The Pilot tab is an approximate teaching simulator, and the JPL 3D reference viewer contains real planetary states plus an illustrative spacecraft—not a validated 3D GAD mission.</p></details>
 </div><div class="v10-legend">Suggested progression: adjust one control in Learn, fly its effect in Pilot, inspect a recorded 2D mission, then explore where the bodies actually were in 3D.</div>`;
 panels.learn.appendChild(v10LearnCard);
+// Explicit live-release identity. Archived controller revisions remain selectable in 2D.
+const v10ProductionNotice=document.createElement('div');
+v10ProductionNotice.id='gadProductionRelease';
+v10ProductionNotice.setAttribute('role','status');
+v10ProductionNotice.style.cssText='margin:8px 0 12px;padding:10px 14px;border:1px solid #32647b;border-radius:10px;background:#0b2535;color:#d5f4fb;font:650 12px system-ui;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center';
+v10ProductionNotice.innerHTML='<span>GAD MISSION CONTROL <strong style="color:#84ece7">V10 · CURRENT RELEASE</strong></span><span style="font-size:11px;font-weight:450;color:#9bbbd0">5 pilot challenges · 31-body JPL 3D reference · 29 historic 2D routes</span>';
+const v10Nav=document.querySelector('.v9-tabs');
+if(v10Nav)v10Nav.before(v10ProductionNotice);
+document.title='GAD Mission Control · V10';
