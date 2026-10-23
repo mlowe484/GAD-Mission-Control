@@ -3,8 +3,28 @@
    Runs inside the V9 closure AFTER V10's patch, never changes ephemeris or flight evidence. */
 {
  const releaseMarker=document.getElementById('gadProductionRelease');
- if(releaseMarker){const strong=releaseMarker.querySelector('strong');if(strong)strong.textContent='V10.1 · CURRENT RELEASE';}
- document.title='GAD Mission Control · V10.1';
+ if(releaseMarker){const strong=releaseMarker.querySelector('strong');if(strong)strong.textContent='V10.2 · CURRENT RELEASE';}
+ document.title='GAD Mission Control · V10.2';
+ 
+ // V10.2: eliminate straight-chord aliasing in the legacy display subset.
+ // The true native P6F resampling will take precedence when source velocity
+ // vectors are available; this is a visually smooth *derived interpolation*.
+ const v102BaselineMoonSampler=v10BodySample;
+ v10BodySample=function(data,name,t){
+  const body=data?.bodies?.[name];
+  if(!body || body.unit!=='km' || !Array.isArray(body.coords))return v102BaselineMoonSampler(data,name,t);
+  const u=Math.max(0,Math.min(body.samples-1,(t-data.t0_tdb_s)/(body.hours*3600)));
+  const i=Math.min(body.samples-2,Math.floor(u)),f=u-i,a=body.coords,j=i*3,k=(i+1)*3;
+  const p=[a[j],a[j+1],a[j+2]],q=[a[k],a[k+1],a[k+2]];
+  const rp=Math.hypot(...p),rq=Math.hypot(...q);
+  if(!(rp>0&&rq>0))return v102BaselineMoonSampler(data,name,t);
+  const dot=Math.max(-1,Math.min(1,(p[0]*q[0]+p[1]*q[1]+p[2]*q[2])/(rp*rq)));
+  const arc=Math.acos(dot),s=Math.sin(arc);
+  if(s<1e-7)return v102BaselineMoonSampler(data,name,t);
+  const radius=rp+(rq-rp)*f,c0=Math.sin((1-f)*arc)/s/rp,c1=Math.sin(f*arc)/s/rq;
+  return p.map((v,n)=>radius*(v*c0+q[n]*c1));
+ };
+ 
  const css=document.createElement('style');css.textContent=`
  .v101-options{display:flex;gap:9px;flex-wrap:wrap;align-items:end;margin:8px 0 11px}
  .v101-options label{color:#d7edfa;font:600 11px system-ui;display:flex;gap:7px;align-items:center}
@@ -168,7 +188,7 @@
    c.save();c.strokeStyle=host==='Sun'?'#4b708477':name==='Moon'?'#b8e6edb8':'#94bfdaaa';
    c.lineWidth=host==='Sun'?1:1.25;c.beginPath();let started=false;
    for(let j=0;j<=192;j++){
-    const sampleT=t-span*.5+(span*j/192);
+    const trailStart=Math.max(v10Primary.t0_tdb_s,Math.min(v10Primary.t1_tdb_s-span,t-span*.5));const sampleT=trailStart+span*j/192;
     if(sampleT<v10Primary.t0_tdb_s||sampleT>v10Primary.t1_tdb_s)continue;
     const p=getTrajSample(name,sampleT),parentAt=v10Vector(host,sampleT);
     if(!p||!parentAt)continue;
