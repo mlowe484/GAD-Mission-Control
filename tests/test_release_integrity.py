@@ -18,7 +18,7 @@ class ReleaseIntegrity(unittest.TestCase):
     def test_render_hooks_and_scope(self):
         boot=(ROOT/'assets/bootstrap-v11.js').read_text()
         self.assertIn("v9V10Patch=v9Patch.replace",boot)
-        self.assertIn("v104Patch+'\\n})();'",boot)
+        self.assertIn("v104Patch+'\\n'+v11Patch+'\\n})();'",boot)
         self.assertIn('v101Patched',boot)
         self.assertIn('v11Patch',boot)
         self.assertIn('renderingHooks',boot)
