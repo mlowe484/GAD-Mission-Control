@@ -34,9 +34,10 @@ jobs:
           python-version: '3.12'
       - name: Validate site source and replay manifests
         run: python -m unittest discover -s tests -v
-      - name: Check current V10.4 bootstrap JavaScript syntax
-        run: node --check assets/bootstrap-v10-4.js
+      - name: Check current V11 bootstrap JavaScript syntax
+        run: node --check assets/bootstrap-v11.js
       - name: Check stability and subsystem modules
         run: |
           node --check v10-3-stability.patch.js
           node --check v10-4-subsystem-explorer.patch.js
+          node --check v11-pilot-training.patch.js

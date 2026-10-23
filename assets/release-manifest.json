@@ -1,9 +1,9 @@
 {
-  "release": "10.4.1",
+  "release": "11",
   "production_entry": "index.html",
-  "bootstrap": "assets/bootstrap-v10-4.js",
+  "bootstrap": "assets/bootstrap-v11.js",
   "public_versioned_entrypoints": false,
-  "scope": "V10.4.1 3D ephemeris playback smoothing (browser clock and frame-cadence only); frozen JPL data and flight physics unchanged",
+  "scope": "V11 educational pilot flight school; physics and archived evidence unchanged",
   "legacy_replay_core": "assets/replay-core.html",
   "modules_in_order": [
     "v4-physics.patch.js",
@@ -20,7 +20,8 @@
     "v10-1-3d-camera-and-reset.patch.js",
     "v10-2-native-moons.patch.js",
     "v10-3-stability.patch.js",
-    "v10-4-subsystem-explorer.patch.js"
+    "v10-4-subsystem-explorer.patch.js",
+    "v11-pilot-training.patch.js"
   ],
   "catalog": "replays/catalog.json",
   "data_origins": [
@@ -28,5 +29,5 @@
     "frozen P6F 31-body JPL ephemeris",
     "derived educational and diagnostic computations"
   ],
-  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps."
+  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps.\nV11 assistance, current-command predictions and results are educational; not independently certified or new controller physics."
 }

@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 class ReleaseIntegrity(unittest.TestCase):
     def test_manifest(self):
         m=json.loads((ROOT/'assets/release-manifest.json').read_text())
-        self.assertEqual(m['release'],'10.4.1')
+        self.assertEqual(m['release'],'11')
         self.assertEqual(m['production_entry'],'index.html')
         self.assertFalse(m['public_versioned_entrypoints'])
         self.assertTrue((ROOT/m['bootstrap']).exists())
@@ -13,13 +13,14 @@ class ReleaseIntegrity(unittest.TestCase):
             self.assertTrue((ROOT/path).is_file(),path)
     def test_single_entrypoint(self):
         idx=(ROOT/'index.html').read_text()
-        self.assertIn('bootstrap-v10-4.js',idx)
+        self.assertIn('bootstrap-v11.js',idx)
         self.assertFalse(any(ROOT.glob('v[0-9]*.html')))
     def test_render_hooks_and_scope(self):
-        boot=(ROOT/'assets/bootstrap-v10-4.js').read_text()
+        boot=(ROOT/'assets/bootstrap-v11.js').read_text()
         self.assertIn("v9V10Patch=v9Patch.replace",boot)
         self.assertIn("v104Patch+'\\n})();'",boot)
         self.assertIn('v101Patched',boot)
+        self.assertIn('v11Patch',boot)
         self.assertIn('renderingHooks',boot)
         self.assertIn('v9-active-2d',boot)
         self.assertIn("missing.join('; ')",boot)
@@ -31,4 +32,7 @@ class ReleaseIntegrity(unittest.TestCase):
         self.assertTrue((ROOT/'data/jpl-p6f-primary.json').is_file())
         self.assertTrue((ROOT/'replays/catalog.json').is_file())
         self.assertTrue((ROOT/'v10-3-stability.patch.js').is_file())
+        pilot=(ROOT/'v11-pilot-training.patch.js').read_text()
+        for keyword in ('computePreview','v11Difficulty','v11Report','v11NextLesson','v11ForecastEnabled'):
+            self.assertIn(keyword,pilot)
 if __name__=='__main__':unittest.main()

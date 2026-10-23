@@ -1,4 +1,4 @@
-# GAD Mission Control — V10.4.1
+# GAD Mission Control — V11
 
 **Public website:** https://mlowe484.github.io/GAD-Mission-Control/
 
@@ -46,3 +46,9 @@ Deployment entry: `index.html` → `assets/bootstrap-v10-4.js` → `v10-4-subsys
 ## V10.4.1 — Smooth Moon Playback
 
 Mimas orbits in roughly 22.7 hours. The previous ¼-day/frame minimum jumped 6 simulated hours every animation step, showing just 3–4 apparent positions per revolution. The clock now advances continuously according to actual elapsed browser time, with 15-minute/hour/day simulated-time-per-real-second options, and a reference epoch readout. Default: 3 simulated hours/real second, or about 7.6 real seconds per Mimas revolution. Native JPL P6F positions, velocity interpolation, moon orbit trails, 2D mission replays and pilot GAD physics are unchanged.
+
+## V11 Pilot Challenge 2.0
+
+V11 expands the five existing educational orbital challenges with Guided, Standard, and Expert assistance modes, a dashed held-command trajectory forecast, an in-session lesson progress counter, and reports for success and failure. The numerical preview assumes the current K, theta, and phi remain fixed; it is not a saved autonomous-controller plan. Assistance changes the available help, not physics, K limits, starting states, or challenge success gates. The 0–100 training score is illustrative. Independent full reachability qualification of all challenges is still outstanding.
+
+Module: `v11-pilot-training.patch.js`, appended to the V9 private viewer scope by `assets/bootstrap-v11.js`. Frozen RC42/RC44 replay data and JPL/P6F ephemeris archives are unchanged.
