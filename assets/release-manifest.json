@@ -1,9 +1,9 @@
 {
-  "release": "11",
+  "release": "11.1",
   "production_entry": "index.html",
   "bootstrap": "assets/bootstrap-v11.js",
   "public_versioned_entrypoints": false,
-  "scope": "V11 educational pilot flight school; physics and archived evidence unchanged",
+  "scope": "Add four recorded Earth-centered C3L-U/V/W 31-body hypothetical GAD controller maneuvers as a distinct 3D Explorer subview; no physics, ephemeris or historical 2D replay changes",
   "legacy_replay_core": "assets/replay-core.html",
   "modules_in_order": [
     "v4-physics.patch.js",
@@ -21,7 +21,8 @@
     "v10-2-native-moons.patch.js",
     "v10-3-stability.patch.js",
     "v10-4-subsystem-explorer.patch.js",
-    "v11-pilot-training.patch.js"
+    "v11-pilot-training.patch.js",
+    "v11-1-recorded-3d-maneuvers.patch.js"
   ],
   "catalog": "replays/catalog.json",
   "data_origins": [
@@ -29,5 +30,16 @@
     "frozen P6F 31-body JPL ephemeris",
     "derived educational and diagnostic computations"
   ],
-  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps.\nV11 assistance, current-command predictions and results are educational; not independently certified or new controller physics."
+  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps.\nV11 assistance, current-command predictions and results are educational; not independently certified or new controller physics.\nV11.1 Recorded 3D Maneuvers separate from JPL Solar System Reference and educational Pilot Challenge; no private controller code is published.",
+  "recorded_3d_gallery": {
+    "index": "data/3d-maneuvers/INDEX.json",
+    "scenarios": 4,
+    "frame": "Earth-relative inertial J2000",
+    "source": "SHA256-checked guarded 31-body controller physical samples",
+    "interpolation": "viewer-only Hermite",
+    "qualifications": [
+      "QUALIFIED_REAL31_ORBIT_REPLAY_MATCHED",
+      "QUALIFIED_REAL31_ORBIT"
+    ]
+  }
 }

@@ -1,4 +1,4 @@
-# GAD Mission Control — V11
+# GAD Mission Control — V11.1
 
 **Public website:** https://mlowe484.github.io/GAD-Mission-Control/
 
@@ -52,3 +52,9 @@ Mimas orbits in roughly 22.7 hours. The previous ¼-day/frame minimum jumped 6 s
 V11 expands the five existing educational orbital challenges with Guided, Standard, and Expert assistance modes, a dashed held-command trajectory forecast, an in-session lesson progress counter, and reports for success and failure. The numerical preview assumes the current K, theta, and phi remain fixed; it is not a saved autonomous-controller plan. Assistance changes the available help, not physics, K limits, starting states, or challenge success gates. The 0–100 training score is illustrative. Independent full reachability qualification of all challenges is still outstanding.
 
 Module: `v11-pilot-training.patch.js`, appended to the V9 private viewer scope by `assets/bootstrap-v11.js`. Frozen RC42/RC44 replay data and JPL/P6F ephemeris archives are unchanged.
+
+## V11.1 — Recorded 3D Maneuvers
+
+The **3D Explorer** now has separate **Solar System Reference** (JPL/Horizons P6F solar system; its spacecraft is illustrative) and **Recorded 3D Maneuvers** (four Earth-centered 31-moving-body hypothetical GAD controller flights). Recorded scenarios: C3L-U 400→700 km and 400→300 km; C3L-V 15° plane-change raise; C3L-W 400×700 km ellipse followed by 700 km circularization. The viewer supports playback, scrubbing, Earth-centered camera rotation and zoom, 3D orbital inclination, relative speed, altitude, GAD burn/coast command timings and source qualification provenance. Both QUALIFIED_REAL31_ORBIT and QUALIFIED_REAL31_ORBIT_REPLAY_MATCHED are represented with their distinct GAD-off proof history. Website samples are source-recorded trajectory previews with display-only cubic Hermite interpolation, not new physical integration. No private solver/controller source is published. One shared public homepage stays index.html.
+
+Source data: data/3d-maneuvers/INDEX.json, four maneuver JSON files; UI: v11-1-recorded-3d-maneuvers.patch.js.
