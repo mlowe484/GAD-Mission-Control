@@ -1,4 +1,4 @@
-# GAD Mission Control — V11.1
+# GAD Mission Control — V11.2
 
 **Public website:** https://mlowe484.github.io/GAD-Mission-Control/
 
@@ -58,3 +58,9 @@ Module: `v11-pilot-training.patch.js`, appended to the V9 private viewer scope b
 The **3D Explorer** now has separate **Solar System Reference** (JPL/Horizons P6F solar system; its spacecraft is illustrative) and **Recorded 3D Maneuvers** (four Earth-centered 31-moving-body hypothetical GAD controller flights). Recorded scenarios: C3L-U 400→700 km and 400→300 km; C3L-V 15° plane-change raise; C3L-W 400×700 km ellipse followed by 700 km circularization. The viewer supports playback, scrubbing, Earth-centered camera rotation and zoom, 3D orbital inclination, relative speed, altitude, GAD burn/coast command timings and source qualification provenance. Both QUALIFIED_REAL31_ORBIT and QUALIFIED_REAL31_ORBIT_REPLAY_MATCHED are represented with their distinct GAD-off proof history. Website samples are source-recorded trajectory previews with display-only cubic Hermite interpolation, not new physical integration. No private solver/controller source is published. One shared public homepage stays index.html.
 
 Source data: data/3d-maneuvers/INDEX.json, four maneuver JSON files; UI: v11-1-recorded-3d-maneuvers.patch.js.
+
+## V11.2 — cinematic 3D recorded playback
+
+In 3D Explorer → Recorded 3D Maneuvers, the default Cinematic mode now slows the **first burn** to roughly ten seconds of onscreen playback, accelerates **later burns** to roughly 6.5 seconds, and speeds through the intervening real GAD-off **coast** in roughly 7.5 seconds. Every saved command boundary is honored, avoiding skipped short burns. The fixed 1×, 4×, 20×, 60×, 120× and 600× options remain available.
+
+A checked **Show aperture** switch displays an actual **geometric** 3D cone reconstructed from the archive's saved half-angle, signed offset and transverse steering vector, using the frozen P6/3D drive-axis convention. The wireframe does not imply a recomputed coupled mass centroid or measured thrust; it vanishes when the recorded K is OFF. This viewer patch replaces V11.1 at runtime while leaving its source file and all four original archived gallery JSON records byte-identical.

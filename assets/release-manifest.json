@@ -1,9 +1,9 @@
 {
-  "release": "11.1",
+  "release": "11.2",
   "production_entry": "index.html",
   "bootstrap": "assets/bootstrap-v11.js",
   "public_versioned_entrypoints": false,
-  "scope": "Add four recorded Earth-centered C3L-U/V/W 31-body hypothetical GAD controller maneuvers as a distinct 3D Explorer subview; no physics, ephemeris or historical 2D replay changes",
+  "scope": "V11.2 cinematic viewer pacing and command-derived 3D GAD aperture cone wireframes for four recorded, previously qualified Earth maneuvers; no physics, sample, or qualification edits",
   "legacy_replay_core": "assets/replay-core.html",
   "modules_in_order": [
     "v4-physics.patch.js",
@@ -22,7 +22,7 @@
     "v10-3-stability.patch.js",
     "v10-4-subsystem-explorer.patch.js",
     "v11-pilot-training.patch.js",
-    "v11-1-recorded-3d-maneuvers.patch.js"
+    "v11-2-cinematic-recorded-3d.patch.js"
   ],
   "catalog": "replays/catalog.json",
   "data_origins": [
@@ -30,7 +30,7 @@
     "frozen P6F 31-body JPL ephemeris",
     "derived educational and diagnostic computations"
   ],
-  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps.\nV11 assistance, current-command predictions and results are educational; not independently certified or new controller physics.\nV11.1 Recorded 3D Maneuvers separate from JPL Solar System Reference and educational Pilot Challenge; no private controller code is published.",
+  "notes": "Current production entry index.html only. V10–V10.4 extend V9 private scope. V10.4 has three guarded rendering hooks in V10.1; native 20-moon P6F file chunks are loaded on demand.\nSmooth time advancement at user-selected simulated seconds per real second; keep 3D moon rendering near 24 fps.\nV11 assistance, current-command predictions and results are educational; not independently certified or new controller physics.\nV11.1 Recorded 3D Maneuvers separate from JPL Solar System Reference and educational Pilot Challenge; no private controller code is published.\nV11.2: existing recorded flight data remains identical; player now derives aperture axis from parent-center vector, recorded signed offset and steering hint (per frozen P6 _drive_axis); renders cone wireframe only for powered stages. Cinematic playback first burn slow, later burn faster, coast accelerated, with fixed-speed overrides; command boundaries always respected. The cone represents geometrical axis/angle, not recomputed selected mass.",
   "recorded_3d_gallery": {
     "index": "data/3d-maneuvers/INDEX.json",
     "scenarios": 4,
@@ -40,6 +40,8 @@
     "qualifications": [
       "QUALIFIED_REAL31_ORBIT_REPLAY_MATCHED",
       "QUALIFIED_REAL31_ORBIT"
-    ]
+    ],
+    "playback": "cinematic scene: first burn ~10 seconds, later burns ~6.5 seconds, coasts ~7.5 seconds, manual fixed speeds",
+    "aperture": "3D source-derived cone axis and half-angle; no numerical force reconstruction"
   }
 }
