@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>Manual GAD Flight Laboratory · Mission Control</title><link rel="stylesheet" href="./lab.css"></head>
+<body><header class="top"><a href="../" class="back">← Mission Control</a><div><strong>MANUAL GAD FLIGHT LABORATORY</strong><small>Moon · 31-body engineering sandbox</small></div><span class="state" id="connection">Checking native service…</span></header>
+<main><section class="visual"><div class="titlebar"><div><h1>Moon orbital operations</h1><p>Rotate the scene by dragging · scroll to zoom · scrub the physically sampled history.</p></div><span class="pill">PREVIEW ≠ VERIFIED</span></div>
+<canvas id="viewport" width="1100" height="650" role="img" aria-label="Rotatable 3D Moon reference sphere, initial and target orbital planes, and native preview trajectory"></canvas>
+<div class="legend"><span class="line cyan">Native executed trajectory</span><span class="line green">Initial plane</span><span class="line orange">30° target plane</span><span class="dot">Spacecraft sample</span></div>
+<div class="timeline"><button id="play" title="Play sampled trajectory" disabled>▶</button><input type="range" id="scrub" min="0" max="0" value="0" aria-label="Trajectory sample position" disabled><output id="time">No physical preview</output></div>
+<div class="readouts" id="readouts"><div><small>Plane error</small><strong id="plane">—</strong></div><div><small>Plane correction</small><strong id="change">—</strong></div><div><small>Altitude</small><strong id="alt">—</strong></div><div><small>Speed</small><strong id="speed">—</strong></div><div><small>Apoapsis altitude</small><strong id="apo">—</strong></div><div><small>Periapsis altitude</small><strong id="peri">—</strong></div><div><small>Eccentricity</small><strong id="ecc">—</strong></div><div><small>Radial speed</small><strong id="radial">—</strong></div></div>
+<div class="note">Readouts are Moon-centered osculating two-body diagnostics computed from real 31-body native states. Orbit-plane overlays are geometric guides. No predicted flight is drawn without a physics result.</div></section>
+<aside class="controls"><h2>Manual aperture controls</h2><p class="muted">Build a complete GAD/coast command history. The local native service executes the frozen GAD force law; the browser never applies an invented acceleration.</p>
+<label>Engine strength K <input id="K" type="number" value="100" min="0.001" max="100" step="0.5"></label>
+<label>Aperture half-angle (degrees) <input id="half" type="number" value="34.377" min="0" max="180" step="0.1"></label>
+<label>Signed aperture offset (degrees) <input id="offset" type="number" value="-35.523" min="-178" max="178" step="0.25"></label>
+<div class="triple"><label>Steer X <input id="sx" type="number" value="0" step="0.1"></label><label>Y <input id="sy" type="number" value="0" step="0.1"></label><label>Z <input id="sz" type="number" value="1" step="0.1"></label></div>
+<label>GAD-on duration (seconds) <input id="duration" type="number" value="2.25" min="0.001" max="60" step="0.25"></label>
+<label>Coast duration (seconds) <input id="coast" type="number" value="5" min="0.001" max="60" step="1"></label>
+<label>Recorded substeps per command <select id="samples"><option>1</option><option selected>2</option><option>4</option><option>8</option></select></label>
+<div class="actions"><button id="preview" class="primary">Preview GAD burn</button><button id="coastPreview">Preview coast</button></div>
+<div class="actions"><button id="accept" disabled>Accept preview to sandbox</button><button id="undo">Undo last accepted</button></div>
+<div class="actions"><button id="reset">Reset sandbox</button><button id="export">Export evidence</button><button id="importBtn">Import results</button><input id="importFile" type="file" accept="application/json" hidden></div>
+<h3>Exact command history</h3><ol id="history"><li>Original pinned Moon state (no commands accepted)</li></ol>
+<div class="setup"><h3>Native physics connection</h3><label>Local backend URL <input id="endpoint" value="http://127.0.0.1:8765" spellcheck="false" autocomplete="off"></label><button id="recheck">Check connection</button><p>GitHub Pages hosts the interface only. Run the supplied Python service locally to enable physical previews; otherwise controls do not simulate a flight.</p></div>
+<div class="status" id="status" role="status" aria-live="polite">Ready. Checking the local evaluator…</div><p class="disclaimer">ENGINEERING TEST ONLY · K≤100 test authority · no production-issued state · numerical uncertainty and continuous clearance unresolved · no WS-06 acceptance.</p>
+</aside></main><script defer src="./lab.js"></script></body></html>
