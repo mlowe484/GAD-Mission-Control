@@ -24,6 +24,9 @@ try{
  const v104Patch=await v104Response.text();
  const v11Patch=await v11Response.text();
  const v112Patch=await v112Response.text();
+ const v12ManualResponse=await fetch('./v12-manual-flight-link.patch.js?release=w38');
+ if(!v12ManualResponse.ok)throw new Error('Unable to load Manual Flight Lab launch card');
+ const v12Manual=await v12ManualResponse.text();
  // The V9 tab/pilot code runs inside a private closure. V10 extends its
  // internal controls, so it MUST execute before that V9 closure closes.
  // Keep V3-V8 controllers/replay modules and their data entirely unchanged.
@@ -41,7 +44,7 @@ try{
   if(v101Patched.split(oldText).length!==2)throw new Error('V10.4 incompatible 3D renderer hook: '+oldText.slice(0,60));
   v101Patched=v101Patched.replace(oldText,newText);
  }
- const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n'+v101Patched+'\n'+v102Patch+'\n'+v103Patch+'\n'+v104Patch+'\n'+v11Patch+'\n'+v112Patch+'\n})();');
+ const v9V10Patch=v9Patch.replace(/\}\)\(\);\s*$/,v10Patch+'\n'+v101Patched+'\n'+v102Patch+'\n'+v103Patch+'\n'+v104Patch+'\n'+v11Patch+'\n'+v112Patch+'\n'+v12Manual+'\n})();');
  // Keep the archived V3 page and V6/V6.1 patches unchanged: only repair
  // the Auto camera's transition zoom and craft-safe framing in the render function.
  const oldCamera="let desired=targetCamera(s,t); if(!frameCam) frameCam={...desired}; else { frameCam.cx=lerp(frameCam.cx,desired.cx,.13); frameCam.cy=lerp(frameCam.cy,desired.cy,.13); frameCam.scale=lerp(frameCam.scale,desired.scale,.16); frameCam.using=desired.using; } const cam=frameCam;";
